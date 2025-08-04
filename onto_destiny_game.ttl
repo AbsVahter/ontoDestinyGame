@@ -196,7 +196,7 @@ destiny:guardians_reunited_with_ikora_on_io a destiny:GameEvent ;
     rdfs:comment "Стражи нашли Икору на Ио в Потерянном оазисе, последнем месте, где был Странник. Икора рассказала о том, что Красный легион ищет что-то, что они никогда не смогут понять."@ru, 
         "Guardians found Ikora on Io in the Lost Oasis, the last place the Traveler touched. Ikora told them that the Red Legion is searching for something they could never possibly understand."@en ;
     prov:wasAssociatedWith destiny:guardians , destiny:ikora ;
-    prov:wasInformedBy destiny:guardians_gave_cayde_vex_teleporter ;
+    prov:wasInformedBy destiny:guardians_gave_cayde_vex_teleporter , destiny:ikora_departed_to_io ;
     prov:atLocation destiny:io ;
     prov:qualifiedAssociation [
         a prov:Association ;
@@ -517,7 +517,7 @@ destiny:guardians_arrived_nessus_search_cayde a destiny:GameEvent ;
     rdfs:comment "После получения странного сигнала Стражи прибыли на центавр Несс в поисках Кейда-6, который оказался заперт в петле телепортации вексов. С помощью Нейроматрицы они вызволили Кейда из ловушки."@ru, 
         "After receiving a strange signal, Guardians arrived on the centaur of Nessus in search of Cayde-6, who has been trapped in a Vex teleportation loop. With the help of the Neural Matrix, they freed Cayde from the trap."@en ;
     prov:wasAssociatedWith destiny:guardians , destiny:cayde , destiny:vex , destiny:failsafe ;
-    prov:wasInformedBy destiny:sloane_decrypted_signal ;
+    prov:wasInformedBy destiny:sloane_decrypted_signal , destiny:cayde_departed_to_nessus ;
     prov:atLocation destiny:nessus ;
     prov:qualifiedAssociation [
         a prov:Association ;
@@ -1569,7 +1569,7 @@ destiny:guardians_calus_trials a destiny:GameEvent ;
         prov:hadPlan destiny:competition_motive
     ] .
 
-destiny:factions_return_to_last_city a prov:Activity ;
+destiny:factions_return_to_last_city a destiny:GameEvent ;
     rdfs:label "Возвращение фракций в Последний город"@ru,
         "Factions return to Last City"@en ;
     rdfs:comment "Фракции вернулись в Последний город после поражения Гоула и начали набирать новых членов."@ru,
@@ -1641,7 +1641,7 @@ destiny:calus_conquest_of_sindu a prov:Activity ;
         prov:hadPlan destiny:conquest_motive
     ] .
 
-destiny:jarus_recruitment_by_calus a prov:Activity ;
+destiny:jarus_recruitment_by_calus a destiny:GameEvent ;
     rdfs:label "Вербовка Джаруса Калусом"@ru,
         "Jarus recruitment by Calus"@en ;
     rdfs:comment "Калус завербовал Джаруса, последнего пилота звезд Синду, и сделал его своим Асом."@ru,
@@ -1655,7 +1655,7 @@ destiny:jarus_recruitment_by_calus a prov:Activity ;
         prov:hadPlan destiny:recruit_shadow
     ] .
 
-destiny:jarus_elimination_of_shayotet a prov:Activity ;
+destiny:jarus_elimination_of_shayotet a destiny:GameEvent ;
     rdfs:label "Устранение Джарусом Шаётета"@ru,
         "Jarus elimination of Shayotet"@en ;
     rdfs:comment "Джарус устранил Шаётета по заданию Калуса."@ru,
@@ -1668,7 +1668,7 @@ destiny:jarus_elimination_of_shayotet a prov:Activity ;
         prov:hadPlan destiny:obey_calus_orders
     ] .
 
-destiny:shadows_attack_on_ghaul_dominus a prov:Activity ;
+destiny:shadows_attack_on_ghaul_dominus a destiny:GameEvent ;
     rdfs:label "Атака Теней на корабль Доминуса Гоула"@ru,
         "Shadows attack on Ghaul's Dominus ship"@en ;
     rdfs:comment "Джарус атаковал корабль Доминус Гоула, доставив Теней ценой собственной жизни."@ru,
@@ -1721,7 +1721,7 @@ destiny:recruit_shadow a prov:Plan ;
         "Recruit elite warrior to serve Calus."@en ;
     prov:specializationOf destiny:power_motive .
 
-destiny:clipse_cataclysm a prov:Activity ;
+destiny:clipse_cataclysm a destiny:GameEvent ;
     rdfs:label "Катастрофа Клипсов"@ru,
         "Clipse cataclysm"@en ;
     rdfs:comment "Межзвездное гамма-излучение уничтожило западное полушарие Клипсов и отравило атмосферу, начав вечную войну с инопланетной угрозой."@ru,
@@ -1733,7 +1733,7 @@ destiny:clipse_cataclysm a prov:Activity ;
         prov:hadPlan destiny:survival_motive
     ] .
 
-destiny:calus_conquest_of_clipse a prov:Activity ;
+destiny:calus_conquest_of_clipse a destiny:GameEvent ;
     rdfs:label "Покорение Калусом Клипсов"@ru,
         "Calus conquest of Clipse"@en ;
     rdfs:comment "Калус покорил Клипсов, предложив им все необходимое для окончания вечной войны."@ru,
@@ -1746,7 +1746,7 @@ destiny:calus_conquest_of_clipse a prov:Activity ;
         prov:hadPlan destiny:conquest_motive
     ] .
 
-destiny:rull_recruitment_by_calus a prov:Activity ;
+destiny:rull_recruitment_by_calus a destiny:GameEvent ;
     rdfs:label "Вербовка Рулла Калусом"@ru,
         "Rull recruitment by Calus"@en ;
     rdfs:comment "Калус завербовал Рулла, последнего выжившего воина Клипсов."@ru,
@@ -1760,7 +1760,7 @@ destiny:rull_recruitment_by_calus a prov:Activity ;
         prov:hadPlan destiny:recruit_shadow
     ] .
 
-destiny:rull_assassination_mission a prov:Activity ;
+destiny:rull_assassination_mission a destiny:GameEvent ;
     rdfs:label "Миссия Рулла по убийству на родном мире Кабал"@ru,
         "Rull assassination mission on Cabal homeworld"@en ;
     rdfs:comment "Рулл отправился на родной мир Кабал с подарками от Калуса, убил Искаала и Моли прямо перед Гоулом. В результате Рулл был убит."@ru,
@@ -1808,7 +1808,7 @@ destiny:cabal_homeworld a destiny:Location ;
     rdfs:comment "Родная планета Кабал."@ru,
         "Home planet of the Cabal."@en .
 
-destiny:fulminator_recruitment_by_calus a prov:Activity ;
+destiny:fulminator_recruitment_by_calus a destiny:GameEvent ;
     rdfs:label "Вербовка Грозящей Калусом"@ru,
         "Fulminator recruitment by Calus"@en ;
     rdfs:comment "Калус завербовал Грозящую, существо чистой энергии ковчегорожденных."@ru,
@@ -1821,7 +1821,7 @@ destiny:fulminator_recruitment_by_calus a prov:Activity ;
         prov:hadPlan destiny:recruit_shadow
     ] .
 
-destiny:fulminator_assassination_of_thauul a prov:Activity ;
+destiny:fulminator_assassination_of_thauul a destiny:GameEvent ;
     rdfs:label "Убийство Грозящей Та'уула"@ru,
         "Fulminator assassination of Tha'uul"@en ;
     rdfs:comment "Грозящая убила Та'уула, мелкого дипломата, участвовавшего в перевороте против императора. В результате Грозящая узнала о планах Гоула напасть на Солнечную систему и Странника."@ru,
@@ -1835,7 +1835,7 @@ destiny:fulminator_assassination_of_thauul a prov:Activity ;
         prov:hadPlan destiny:obey_calus_orders
     ] .
 
-destiny:fulminator_final_attack_on_ghaul a prov:Activity ;
+destiny:fulminator_final_attack_on_ghaul a destiny:GameEvent ;
     rdfs:label "Финальная атака Грозящей на Гоула"@ru,
         "Fulminator final attack on Ghaul"@en ;
     rdfs:comment "Грозящая атаковала Гоула на мостике корабля Доминуса. В результате Грозящая была уничтожена."@ru,
