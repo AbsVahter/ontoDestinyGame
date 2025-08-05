@@ -92,14 +92,10 @@ destiny:red_war_arc a destiny:GameEventArc ;
     rdfs:label "Арка Красной войны"@ru, 
         "Red War Arc"@en ;
     rdfs:comment "Война между Кабал и человечеством, начавшаяся с нападения на Последний город."@ru, "War between the Cabal and humanity, beginning with the attack on the Last City."@en ;
-    prov:wasAssociatedWith destiny:ghaul , destiny:cabal ;
+    prov:wasAssociatedWith destiny:ghaul ;
     prov:wasInformedBy destiny:collapse_arc ;
     prov:atLocation destiny:earth ;
-    prov:qualifiedAssociation [
-        a prov:Association ;
-        prov:agent destiny:ghaul ;
-        prov:hadPlan destiny:conquer_traveler_light
-    ] ;
+    prov:qualifiedAssociation destiny:ghaul_conquer_traveler_light ;
     destiny:containsEvent destiny:ghaul_attacked_last_city , destiny:ghaul_deployed_almighty , 
         destiny:zavala_departed_to_titan , destiny:cayde_departed_to_nessus , destiny:ikora_departed_to_io , 
         destiny:guardians_arrived_at_farm , destiny:guardians_restored_light , destiny:edz_communication_network_was_setup , 
@@ -113,6 +109,14 @@ destiny:red_war_arc a destiny:GameEventArc ;
         destiny:consul_and_speaker_were_killed , destiny:guardians_joined_counteroffensive_and_activated_teleporter , 
         destiny:guardians_defeated_ghaul , destiny:traveler_awakened_destroyed_ghaul_and_attracted_pyramids , 
         destiny:factions_return_to_last_city , destiny:guardians_calus_trials .
+
+destiny:ghaul_conquer_traveler_light a prov:Association ;
+    rdfs:label "Уточнение: мотив Гоула захватить Свет Странника"@ru,
+        "Clarification: Ghaul's motivation to conquer the Traveler's Light"@en ;
+    rdfs:comment "Уточнение, отражающее, что Гоул хочет захватить Свет Странника."@ru,
+        "Clarification reflecting that Ghaul wants to conquer the Traveler's Light."@en ;
+    prov:agent destiny:ghaul ;
+    prov:hadPlan destiny:conquer_traveler_light .
 
 # События
 # Events
@@ -132,11 +136,7 @@ destiny:ghaul_attacked_last_city a destiny:GameEvent ;
     prov:wasAssociatedWith destiny:ghaul , destiny:red_legion , destiny:guardians , destiny:traveler , destiny:speaker ;
     prov:atLocation destiny:last_city ;
     prov:used destiny:light_suppression_device ;
-    prov:qualifiedAssociation [
-        a prov:Association ;
-        prov:agent destiny:ghaul ;
-        prov:hadPlan destiny:conquer_traveler_light
-    ] .
+    prov:qualifiedAssociation destiny:ghaul_conquer_traveler_light .
 
 destiny:ghaul_deployed_almighty a destiny:GameEvent ;
     rdfs:label "Гоул разместил Всемогущий рядом с Солнцем"@ru, 
@@ -280,11 +280,7 @@ destiny:ghaul_interrogated_speaker_and_learned_io_success a destiny:GameEvent ;
     prov:wasAssociatedWith destiny:ghaul , destiny:speaker , destiny:consul ;
     prov:wasInformedBy destiny:red_legion_mined_traveler_energy_on_io ;
     prov:atLocation destiny:the_immortal ;
-    prov:qualifiedAssociation [
-        a prov:Association ;
-        prov:agent destiny:ghaul ;
-        prov:hadPlan destiny:conquer_traveler_light
-    ] .
+    prov:qualifiedAssociation destiny:ghaul_conquer_traveler_light .
 
 destiny:vanguard_reunited_at_farm a destiny:GameEvent ;
     rdfs:label "Авангард воссоединился на Ферме"@ru, 
@@ -390,7 +386,7 @@ destiny:consul_and_speaker_were_killed a destiny:GameEvent ;
     rdfs:comment "После потери Всемогущего Консул обвинил Гоула в неудаче и потребовал, чтобы он взял Свет силой, а затем убил Глашатая. После этого Гоул задушил Консула."@ru, 
         "After losing the Almighty, the Consul blamed Ghaul for the failure and demanded that he take the Light by force. Ghaul killed the Speaker who admitted he never spoke to the Traveler, then smothered the Consul."@en ;
     prov:wasAssociatedWith destiny:ghaul , destiny:consul , destiny:speaker ;
-    prov:wasInformedBy destiny:guardians_fought_and_disabled_almighty ;
+    prov:wasInformedBy destiny:guardians_fought_and_disabled_almighty , destiny:ghaul_interrogated_speaker_and_learned_io_success ;
     prov:atLocation destiny:the_immortal ;
     prov:qualifiedAssociation [
         a prov:Association ;
@@ -432,12 +428,7 @@ destiny:guardians_defeated_ghaul a destiny:GameEvent ;
         a prov:Association ;
         prov:agent destiny:guardians ;
         prov:hadPlan destiny:free_traveler_and_occupied_city
-    ] ,
-    [
-        a prov:Association ;
-        prov:agent destiny:ghaul ;
-        prov:hadPlan destiny:conquer_traveler_light
-    ] .
+    ] , destiny:ghaul_conquer_traveler_light .
 
 destiny:traveler_awakened_destroyed_ghaul_and_attracted_pyramids a destiny:GameEvent ;
     rdfs:label "Странник пробудился, уничтожил Гоула и привлек внимание Пирамид"@ru, 
@@ -912,6 +903,12 @@ destiny:competition_motive a destiny:GeneralMotive ;
         "Competition motive"@en ;
     rdfs:comment "Общий мотив соревнования, испытания сил и демонстрации превосходства."@ru, 
         "General motive of competition, testing strength and demonstrating superiority."@en .
+
+destiny:submission_motive a destiny:GeneralMotive ;
+    rdfs:label "Мотив подчинения"@ru, 
+        "Submission motive"@en ;
+    rdfs:comment "Общий мотив подчинения воле другого или внешним обстоятельствам."@ru, 
+        "General motive of submission to another's will or external circumstances."@en .
 
 # Конкретные планы с группировкой
 # Specific plans with grouping
@@ -1629,7 +1626,7 @@ destiny:recruit_new_members a prov:Plan ;
         "Hold trials to attract new members to factions."@en ;
     prov:specializationOf destiny:power_motive .
 
-destiny:calus_conquest_of_sindu a prov:Activity ;
+destiny:calus_conquest_of_sindu a destiny:GameEvent ;
     rdfs:label "Покорение Калусом цивилизации Синду"@ru,
         "Calus conquest of Sindu civilization"@en ;
     rdfs:comment "Калус покорил цивилизацию Синду, населявшую газовые гиганты в спинвардских маршах."@ru,
@@ -1649,11 +1646,20 @@ destiny:jarus_recruitment_by_calus a destiny:GameEvent ;
     prov:wasAssociatedWith destiny:calus, destiny:jarus ;
     prov:atLocation destiny:leviathan ;
     prov:wasInformedBy destiny:calus_conquest_of_sindu ;
-    prov:qualifiedAssociation [
+    prov:qualifiedAssociation destiny:calus_recruit_shadow ,
+    [
         a prov:Association ;
-        prov:agent destiny:calus ;
-        prov:hadPlan destiny:recruit_shadow
+        prov:agent destiny:jarus ;
+        prov:hadPlan destiny:survival_motive
     ] .
+
+destiny:calus_recruit_shadow a prov:Association ;
+    rdfs:label "Уточнение: мотив Калуса завербовать Тень"@ru,
+        "Clarification: Calus's motivation to recruit a Shadow"@en ;
+    rdfs:comment "Уточнение, отражающее, что Калус хочет завербовать Тень."@ru,
+        "Clarification reflecting that Calus wants to recruit a Shadow."@en ;
+    prov:agent destiny:calus ;
+    prov:hadPlan destiny:recruit_shadow .
 
 destiny:jarus_elimination_of_shayotet a destiny:GameEvent ;
     rdfs:label "Устранение Джарусом Шаётета"@ru,
@@ -1662,11 +1668,16 @@ destiny:jarus_elimination_of_shayotet a destiny:GameEvent ;
         "Jarus eliminated Shayotet at Calus's request."@en ;
     prov:wasAssociatedWith destiny:jarus, destiny:shayotet ;
     prov:wasInformedBy destiny:jarus_recruitment_by_calus ;
-    prov:qualifiedAssociation [
-        a prov:Association ;
-        prov:agent destiny:jarus ;
-        prov:hadPlan destiny:obey_calus_orders
-    ] .
+    prov:qualifiedAssociation destiny:jarus_obey_calus_orders .
+
+destiny:jarus_obey_calus_orders a prov:Association ;
+    rdfs:label "Уточнение: Джарус подчиняется приказам Калуса"@ru,
+        "Clarification: Jarus obeys Calus's orders"@en ;
+    rdfs:comment "Уточнение, отражающее, что Джарус подчиняется приказам Калуса."@ru,
+        "Clarification reflecting that Jarus obeys Calus's orders."@en ;
+    prov:agent destiny:jarus ;
+    prov:hadPlan destiny:obey_calus_orders ;
+    prov:wasGeneratedBy destiny:jarus_recruitment_by_calus .
 
 destiny:shadows_attack_on_ghaul_dominus a destiny:GameEvent ;
     rdfs:label "Атака Теней на корабль Доминуса Гоула"@ru,
@@ -1675,11 +1686,16 @@ destiny:shadows_attack_on_ghaul_dominus a destiny:GameEvent ;
         "Jarus attacked Ghaul's Dominus ship, delivering the Shadows at the cost of his own life."@en ;
     prov:wasAssociatedWith destiny:jarus, destiny:shadows , destiny:fulminator ;
     prov:wasInformedBy destiny:jarus_elimination_of_shayotet , destiny:fulminator_assassination_of_thauul ;
-    prov:qualifiedAssociation [
-        a prov:Association ;
-        prov:agent destiny:jarus ;
-        prov:hadPlan destiny:obey_calus_orders
-    ] .
+    prov:qualifiedAssociation destiny:jarus_obey_calus_orders , destiny:fulminator_obey_calus_orders .
+
+destiny:fulminator_obey_calus_orders a prov:Association ;
+    rdfs:label "Уточнение: Грозящая подчиняется приказам Калуса"@ru,
+        "Clarification: Fulminator obeys Calus's orders"@en ;
+    rdfs:comment "Уточнение, отражающее, что Грозящая подчиняется приказам Калуса."@ru,
+        "Clarification reflecting that Fulminator obeys Calus's orders."@en ;
+    prov:agent destiny:fulminator ;
+    prov:hadPlan destiny:obey_calus_orders ;
+    prov:wasGeneratedBy destiny:fulminator_recruitment_by_calus .
 
 destiny:jarus a destiny:Character ;
     rdfs:label "Джарус"@ru,
@@ -1712,7 +1728,7 @@ destiny:obey_calus_orders a prov:Plan ;
         "Obey Calus orders"@en ;
     rdfs:comment "Выполнять приказы и задания Калуса."@ru,
         "Execute Calus's orders and assignments."@en ;
-    prov:specializationOf destiny:power_motive .
+    prov:specializationOf destiny:submission_motive .
 
 destiny:recruit_shadow a prov:Plan ;
     rdfs:label "Набрать Тень"@ru,
@@ -1740,11 +1756,7 @@ destiny:calus_conquest_of_clipse a destiny:GameEvent ;
         "Calus conquered the Clipse, offering them everything needed to end their perpetual war."@en ;
     prov:wasAssociatedWith destiny:calus, destiny:clipse ;
     prov:wasInformedBy destiny:clipse_cataclysm ;
-    prov:qualifiedAssociation [
-        a prov:Association ;
-        prov:agent destiny:calus ;
-        prov:hadPlan destiny:conquest_motive
-    ] .
+    prov:qualifiedAssociation destiny:calus_conquest_motive .
 
 destiny:rull_recruitment_by_calus a destiny:GameEvent ;
     rdfs:label "Вербовка Рулла Калусом"@ru,
@@ -1754,11 +1766,7 @@ destiny:rull_recruitment_by_calus a destiny:GameEvent ;
     prov:wasAssociatedWith destiny:calus, destiny:rull ;
     prov:wasInformedBy destiny:calus_conquest_of_clipse ;
     prov:atLocation destiny:leviathan ;
-    prov:qualifiedAssociation [
-        a prov:Association ;
-        prov:agent destiny:calus ;
-        prov:hadPlan destiny:recruit_shadow
-    ] .
+    prov:qualifiedAssociation destiny:calus_recruit_shadow .
 
 destiny:rull_assassination_mission a destiny:GameEvent ;
     rdfs:label "Миссия Рулла по убийству на родном мире Кабал"@ru,
@@ -1768,11 +1776,16 @@ destiny:rull_assassination_mission a destiny:GameEvent ;
     prov:wasAssociatedWith destiny:rull, destiny:iskaal, destiny:moli, destiny:ghaul ;
     prov:atLocation destiny:cabal_homeworld ;
     prov:wasInformedBy destiny:rull_recruitment_by_calus ;
-    prov:qualifiedAssociation [
-        a prov:Association ;
-        prov:agent destiny:rull ;
-        prov:hadPlan destiny:obey_calus_orders
-    ] .
+    prov:qualifiedAssociation destiny:rull_obey_calus_orders .
+
+destiny:rull_obey_calus_orders a prov:Association ;
+    rdfs:label "Уточнение: мотив Рулла выполнять приказы Калуса"@ru,
+        "Clarification: Rull's motivation to obey Calus's orders"@en ;
+    rdfs:comment "Уточнение, отражающее, что Рулл хочет выполнять приказы Калуса."@ru,
+        "Clarification reflecting that Rull wants to obey Calus's orders."@en ;
+    prov:agent destiny:rull ;
+    prov:hadPlan destiny:obey_calus_orders ;
+    prov:wasGeneratedBy destiny:rull_recruitment_by_calus .
 
 destiny:rull a destiny:Character ;
     rdfs:label "Рулл"@ru,
@@ -1815,11 +1828,7 @@ destiny:fulminator_recruitment_by_calus a destiny:GameEvent ;
         "Calus recruited the Fulminator, a creature of pure Arkborn energy."@en ;
     prov:wasAssociatedWith destiny:calus, destiny:fulminator ;
     prov:atLocation destiny:leviathan ;
-    prov:qualifiedAssociation [
-        a prov:Association ;
-        prov:agent destiny:calus ;
-        prov:hadPlan destiny:recruit_shadow
-    ] .
+    prov:qualifiedAssociation destiny:calus_recruit_shadow .
 
 destiny:fulminator_assassination_of_thauul a destiny:GameEvent ;
     rdfs:label "Убийство Грозящей Та'уула"@ru,
@@ -1828,12 +1837,8 @@ destiny:fulminator_assassination_of_thauul a destiny:GameEvent ;
         "Fulminator assassinated Tha'uul, a minor diplomat who played a part in the coup against the emperor. As a result, Fulminator learned about Ghaul's plans to attack the Solar System and the Traveler."@en ;
     prov:wasAssociatedWith destiny:fulminator, destiny:thauul ;
     prov:wasInformedBy destiny:fulminator_recruitment_by_calus ;
-    prov:used destiny:conquer_traveler_light ;
-    prov:qualifiedAssociation [
-        a prov:Association ;
-        prov:agent destiny:fulminator ;
-        prov:hadPlan destiny:obey_calus_orders
-    ] .
+    prov:used destiny:ghaul_conquer_traveler_light ;
+    prov:qualifiedAssociation destiny:fulminator_obey_calus_orders .
 
 destiny:fulminator_final_attack_on_ghaul a destiny:GameEvent ;
     rdfs:label "Финальная атака Грозящей на Гоула"@ru,
@@ -1842,11 +1847,7 @@ destiny:fulminator_final_attack_on_ghaul a destiny:GameEvent ;
         "Fulminator attacked Ghaul on the Dominus ship bridge. As a result, Fulminator was destroyed."@en ;
     prov:wasAssociatedWith destiny:fulminator, destiny:ghaul ;
     prov:wasInformedBy destiny:shadows_attack_on_ghaul_dominus ;
-    prov:qualifiedAssociation [
-        a prov:Association ;
-        prov:agent destiny:fulminator ;
-        prov:hadPlan destiny:obey_calus_orders
-    ] .
+    prov:qualifiedAssociation destiny:fulminator_obey_calus_orders .
 
 destiny:fulminator a destiny:Character ;
     rdfs:label "Грозящая"@ru,
