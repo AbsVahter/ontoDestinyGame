@@ -580,8 +580,8 @@ destiny:edz_communication_network_was_setup a destiny:GameEvent ;
 destiny:ghaul a destiny:Character ;
     rdfs:label "Гоул"@ru, 
         "Ghaul"@en ;
-    rdfs:comment "Командующий Красным легионом Кабал, стремившийся украсть силу Странника."@ru, 
-        "Commander of the Cabal Red Legion who sought to steal the Traveler's power."@en ;
+    rdfs:comment "Командующий Красным легионом Кабал, бывший гладиатор-альбинос с уродством из внешних пустошей, стремившийся украсть силу Странника."@ru, 
+        "Commander of the Cabal Red Legion, former disfigured albino gladiator from the outer wastes, who sought to steal the Traveler's power."@en ;
     prov:actedOnBehalfOf destiny:red_legion ;
     prov:wasInvalidatedBy destiny:traveler_awakened_destroyed_ghaul_and_attracted_pyramids .
 
@@ -815,9 +815,10 @@ destiny:thumos_unbroken a destiny:Character ;
 destiny:consul a destiny:Character ;
     rdfs:label "Консул"@ru, 
         "The Consul"@en ;
-    rdfs:comment "Советник и наставник Гоула в Красном легионе."@ru, 
-        "Advisor and mentor to Ghaul in the Red Legion."@en ;
-    prov:actedOnBehalfOf destiny:red_legion .
+    rdfs:comment "Советник и наставник Гоула в Красном легионе, бывший политический противник Калуса."@ru, 
+        "Advisor and mentor to Ghaul in the Red Legion, former political opponent of Calus."@en ;
+    prov:actedOnBehalfOf destiny:red_legion ;
+    prov:wasInvalidatedBy destiny:consul_and_speaker_were_killed .
 
 
 destiny:the_immortal a destiny:Object , destiny:Location ;
@@ -1626,6 +1627,69 @@ destiny:recruit_new_members a prov:Plan ;
         "Hold trials to attract new members to factions."@en ;
     prov:specializationOf destiny:power_motive .
 
+destiny:calus_revolution a destiny:GameEvent ;
+    rdfs:label "Революция Калуса"@ru,
+        "Calus's revolution"@en ;
+    rdfs:comment "Калус провел революцию против сената Кабал, объявив себя отцом империи и всех творений. Имперская гвардия вошла в храм, где заседал сенат, и Калус провозгласил себя совершенным любящим богом."@ru,
+        "Calus conducted a revolution against the Cabal senate, declaring himself father of the empire and all creation. The imperial guard marched into the temple where the senate convened, and Calus proclaimed himself the perfect loving god."@en ;
+    prov:wasAssociatedWith destiny:calus ;
+    prov:atLocation destiny:cabal_homeworld ;
+    prov:qualifiedAssociation [
+        a prov:Association ;
+        prov:agent destiny:calus ;
+        prov:hadPlan destiny:establish_imperial_rule
+    ] .
+
+destiny:ghaul_appointed_red_legion_primus a destiny:GameEvent ;
+    rdfs:label "Назначение Гоула примасом Красного Легиона"@ru,
+        "Ghaul appointed Primus of Red Legion"@en ;
+    rdfs:comment "Калус назначил Гоула примасом Красного Легиона после того, как тот проявил себя как выдающийся гладиатор в колизее."@ru,
+        "Calus appointed Ghaul as Primus of the Red Legion after he proved himself as an outstanding gladiator in the coliseum."@en ;
+    prov:wasAssociatedWith destiny:calus, destiny:ghaul ;
+    prov:wasInformedBy destiny:calus_revolution ;
+    prov:atLocation destiny:cabal_homeworld ;
+    prov:qualifiedAssociation [
+        a prov:Association ;
+        prov:agent destiny:calus ;
+        prov:hadPlan destiny:recruit_elite_commander
+    ] .
+
+destiny:consul_banishment a destiny:GameEvent ;
+    rdfs:label "Изгнание Консула"@ru,
+        "Consul's banishment"@en ;
+    rdfs:comment "Первым актом Калуса как императора было изгнание Консула в пустоши. Консул был лишен титула, ранга и одежды, и ему было приказано бежать."@ru,
+        "Calus's first act as emperor was to banish the Consul to the wasteland. The Consul was stripped of title, rank, and clothing, and ordered to run."@en ;
+    prov:wasAssociatedWith destiny:calus, destiny:consul ;
+    prov:wasInformedBy destiny:calus_revolution ;
+    prov:atLocation destiny:cabal_homeworld ;
+    prov:qualifiedAssociation [
+        a prov:Association ;
+        prov:agent destiny:calus ;
+        prov:hadPlan destiny:eliminate_political_opponent
+    ] , [
+        a prov:Association ;
+        prov:agent destiny:consul ;
+        prov:hadPlan destiny:survival_motive
+    ] .
+
+destiny:midnight_coup a destiny:GameEvent ;
+    rdfs:label "Полуночный мятеж"@ru,
+        "Midnight Coup"@en ;
+    rdfs:comment "Гоул и Консул возглавили мятеж против Калуса, проникнув в его двор поздно ночью. Заговорщики боялись убить Калуса из-за любви народа к своему богу-императору, поэтому приговорили его к изгнанию. Калус был запечатан в Левиафане и отправлен в дальние пределы космоса."@ru,
+        "Ghaul and the Consul led a coup against Calus, infiltrating his court late at night. The conspirators were afraid to kill Calus due to the people's love for their god-emperor, so they sentenced him to exile. Calus was sealed inside the Leviathan and ejected into the furthest reaches of space."@en ;
+    prov:wasAssociatedWith destiny:ghaul, destiny:consul, destiny:calus, destiny:red_legion ;
+    prov:wasInformedBy destiny:ghaul_appointed_red_legion_primus, destiny:consul_banishment ;
+    prov:atLocation destiny:cabal_homeworld ;
+    prov:qualifiedAssociation [
+        a prov:Association ;
+        prov:agent destiny:ghaul ;
+        prov:hadPlan destiny:help_consul
+    ] , [
+        a prov:Association ;
+        prov:agent destiny:consul ;
+        prov:hadPlan destiny:revenge_against_calus
+    ] .
+
 destiny:calus_conquest_of_sindu a destiny:GameEvent ;
     rdfs:label "Покорение Калусом цивилизации Синду"@ru,
         "Calus conquest of Sindu civilization"@en ;
@@ -1730,6 +1794,41 @@ destiny:obey_calus_orders a prov:Plan ;
         "Execute Calus's orders and assignments."@en ;
     prov:specializationOf destiny:submission_motive .
 
+destiny:establish_imperial_rule a prov:Plan ;
+    rdfs:label "Установить имперское правление"@ru,
+        "Establish imperial rule"@en ;
+    rdfs:comment "Установить абсолютную власть императора над империей Кабал, устранив сенат."@ru,
+        "Establish absolute imperial authority over the Cabal empire, eliminating the senate."@en ;
+    prov:specializationOf destiny:power_motive .
+
+destiny:recruit_elite_commander a prov:Plan ;
+    rdfs:label "Завербовать элитного командира"@ru,
+        "Recruit elite commander"@en ;
+    rdfs:comment "Найти и назначить выдающегося воина на должность командира элитного подразделения."@ru,
+        "Find and appoint an outstanding warrior to command an elite unit."@en ;
+    prov:specializationOf destiny:power_motive .
+
+destiny:eliminate_political_opponent a prov:Plan ;
+    rdfs:label "Устранить политического противника"@ru,
+        "Eliminate political opponent"@en ;
+    rdfs:comment "Устранить политического противника для укрепления собственной власти."@ru,
+        "Eliminate a political opponent to strengthen one's own power."@en ;
+    prov:specializationOf destiny:elimination_motive .
+
+destiny:help_consul a prov:Plan ;
+    rdfs:label "Помочь Консулу"@ru,
+        "Help the Consul"@en ;
+    rdfs:comment "Помочь Консулу в его мести против Калуса и поддержать его в мятеже."@ru,
+        "Help the Consul in his revenge against Calus and support him in the coup."@en ;
+    prov:specializationOf destiny:protection_motive .
+
+destiny:revenge_against_calus a prov:Plan ;
+    rdfs:label "Отомстить Калусу"@ru,
+        "Revenge against Calus"@en ;
+    rdfs:comment "Отомстить Калусу за изгнание и унижение."@ru,
+        "Take revenge against Calus for banishment and humiliation."@en ;
+    prov:specializationOf destiny:revenge_motive .
+
 destiny:recruit_shadow a prov:Plan ;
     rdfs:label "Набрать Тень"@ru,
         "Recruit Shadow"@en ;
@@ -1775,7 +1874,7 @@ destiny:rull_assassination_mission a destiny:GameEvent ;
         "Rull went to the Cabal homeworld with gifts from Calus, assassinated Iska'al and Moli right in front of Ghaul. As a result, Rull was killed."@en ;
     prov:wasAssociatedWith destiny:rull, destiny:iskaal, destiny:moli, destiny:ghaul ;
     prov:atLocation destiny:cabal_homeworld ;
-    prov:wasInformedBy destiny:rull_recruitment_by_calus ;
+    prov:wasInformedBy destiny:rull_recruitment_by_calus , destiny:midnight_coup ;
     prov:qualifiedAssociation destiny:rull_obey_calus_orders .
 
 destiny:rull_obey_calus_orders a prov:Association ;
