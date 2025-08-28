@@ -1,8 +1,8 @@
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
-@prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix crm: <http://www.cidoc-crm.org/cidoc-crm/> .
 @prefix destiny: <http://destiny.game/ontology#> .
 
 # Онтология игры Destiny
@@ -11,92 +11,147 @@
 # Классы онтологии
 # Ontology Classes
 
-destiny:GameEntity a owl:Class ;
-    rdfs:subClassOf prov:Entity ;
-    rdfs:label "Игровая сущность"@ru, 
-        "Game Entity"@en ;
-    rdfs:comment "Сущности игрового мира Destiny."@ru, "Entities of Destiny game world."@en .
-
 destiny:Character a owl:Class ;
-    rdfs:subClassOf prov:Person ;
+    rdfs:subClassOf crm:E21_Person ;
     rdfs:label "Персонаж"@ru, 
         "Character"@en ;
-    rdfs:comment "Персонажи игрового мира."@ru, "Characters of the game world."@en .
+    rdfs:comment "Персонажи игрового мира."@ru, 
+        "Characters of the game world."@en .
 
 destiny:Location a owl:Class ;
-    rdfs:subClassOf destiny:GameEntity ;
+    rdfs:subClassOf crm:E53_Place ;
     rdfs:label "Локация"@ru, 
         "Location"@en ;
-    rdfs:comment "Места в игровом мире."@ru, "Places in the game world."@en .
+    rdfs:comment "Места в игровом мире."@ru, 
+        "Places in the game world."@en .
 
 destiny:Object a owl:Class ;
-    rdfs:subClassOf destiny:GameEntity ;
+    rdfs:subClassOf crm:E19_Physical_Object ;
     rdfs:label "Объект"@ru, 
         "Object"@en ;
-    rdfs:comment "Объекты игрового мира."@ru, "Objects of the game world."@en .
+    rdfs:comment "Объекты игрового мира."@ru, 
+        "Objects of the game world."@en .
 
 destiny:Organization a owl:Class ;
-    rdfs:subClassOf prov:Organization ;
+    rdfs:subClassOf crm:E74_Group ;
     rdfs:label "Организация"@ru, 
         "Organization"@en ;
-    rdfs:comment "Организации и коллективы игрового мира."@ru, "Organizations and collectives of the game world."@en .
+    rdfs:comment "Организации и коллективы игрового мира."@ru, 
+        "Organizations and collectives of the game world."@en .
 
 destiny:GameEvent a owl:Class ;
-    rdfs:subClassOf prov:Activity ;
+    rdfs:subClassOf crm:E5_Event ;
     rdfs:label "Игровое событие"@ru, 
         "Game Event"@en ;
-    rdfs:comment "События в игровом мире."@ru, "Events in the game world."@en .
+    rdfs:comment "События в игровом мире."@ru, 
+        "Events in the game world."@en .
 
 destiny:GameEventArc a owl:Class ;
-    rdfs:subClassOf destiny:GameEvent ;
+    rdfs:subClassOf crm:E4_Period ;
     rdfs:label "Арка игровых событий"@ru, 
         "Game Event Arc"@en ;
-    rdfs:comment "Группа событий, объединенных сезоном или главой."@ru, "Group of events united by season or chapter."@en .
+    rdfs:comment "Группа событий, объединенных сезоном или главой."@ru, 
+        "Group of events united by season or chapter."@en .
 
-destiny:GeneralMotive a owl:Class ;
-    rdfs:subClassOf prov:Plan ;
+destiny:Motive a owl:Class ;
+    rdfs:label "Мотив"@ru, 
+        "Motive"@en ;
+    rdfs:comment "Мотивы и планы персонажей."@ru, 
+        "Motives and plans of characters."@en .
+
+destiny:MotiveGeneral a owl:Class ;
+    rdfs:subClassOf destiny:Motive ;
     rdfs:label "Общий мотив"@ru, 
         "General Motive"@en ;
     rdfs:comment "Общие мотивы, которые могут быть специализированы в конкретные планы."@ru, 
         "General motives that can be specialized into specific plans."@en .
 
+destiny:MotiveSpecific a owl:Class ;
+    rdfs:subClassOf destiny:Motive ;
+    rdfs:label "Конкретный мотив"@ru, 
+        "Specific Motive"@en ;
+    rdfs:comment "Конкретные мотивы и планы персонажей."@ru, 
+        "Specific motives and plans of characters."@en .
+
+destiny:ClarifiedMotive a owl:Class ;
+    rdfs:label "Мотив конкретного персонажа"@ru, 
+        "Motive of a specific character"@en ;
+    rdfs:comment "Мотив конкретного персонажа, который участвует в событии."@ru, 
+        "Motive of a specific character that participates in an event."@en .
+
 # Отношения между классами
 # Class relationships
-
-destiny:containsEvent a owl:ObjectProperty ;
-    rdfs:domain destiny:GameEventArc ;
-    rdfs:range destiny:GameEvent ;
-    rdfs:label "Содержит событие"@ru, 
-        "Contains event"@en ;
-    rdfs:comment "Отношение между аркой событий и событием, которое она содержит."@ru, "Relationship between event arc and event it contains."@en .
 
 destiny:hasRomanticRelationship a owl:ObjectProperty ;
     rdfs:domain destiny:Character ;
     rdfs:range destiny:Character ;
     rdfs:label "Имеет романтическую связь"@ru, 
         "Has romantic relationship"@en ;
-    rdfs:comment "Отношение романтической связи между двумя персонажами."@ru, "Romantic relationship between two characters."@en .
+    rdfs:comment "Отношение романтической связи между двумя персонажами."@ru, 
+        "Romantic relationship between two characters."@en .
 
-# Арки событий
-# Event Arcs
+destiny:clarifiedMotive a owl:ObjectProperty ;
+    rdfs:domain crm:E4_Period ;
+    rdfs:range destiny:ClarifiedMotive ;
+    rdfs:label "Мотив конкретного персонажа"@ru, 
+        "Motive of a specific character"@en ;
+    rdfs:comment "Мотив конкретного персонажа, который участвует в событии."@ru, 
+        "Motive of a specific character that participates in an event."@en .
+
+destiny:character a owl:ObjectProperty ;
+    rdfs:domain destiny:ClarifiedMotive ;
+    rdfs:range destiny:Character ;
+    rdfs:label "Уточняемый персонаж"@ru, 
+        "Character to be clarified"@en ;
+    rdfs:comment "Уточняемый персонаж, который участвует в событии."@ru, 
+        "Character to be clarified that participates in an event."@en .
+
+destiny:hasMotive a owl:ObjectProperty ;
+    rdfs:domain destiny:ClarifiedMotive ;
+    rdfs:range destiny:Motive ;
+    rdfs:label "Имеет мотив"@ru, 
+        "Has motive"@en ;
+    rdfs:comment "Уточнение участия в событии, которое отражает, что участник события имеет определенный мотив."@ru, 
+        "Clarification of participation in an event that reflects that the event participant has a certain motive."@en .
+
+destiny:specializationOf a owl:ObjectProperty ;
+    rdfs:domain destiny:MotiveSpecific ;
+    rdfs:range destiny:MotiveGeneral ;
+    rdfs:label "Специализация мотива"@ru, 
+        "Specialization of motive"@en ;
+    rdfs:comment "Специализация мотива, которая отражает, что мотив является частью другого мотива."@ru, 
+        "Specialization of a motive that reflects that the motive is part of another motive."@en .
+
+########################################################
 
 destiny:collapse_arc a destiny:GameEventArc ;
     rdfs:label "Арка Коллапса"@ru, 
         "Collapse Arc"@en ;
-    rdfs:comment "Катастрофическое событие, уничтожившее Золотой Век человечества."@ru, "Catastrophic event that destroyed humanity's Golden Age."@en ;
-    prov:wasAssociatedWith destiny:traveler ;
-    prov:atLocation destiny:solar_system ;
-    destiny:containsEvent destiny:traveler_shard_loss .
+    rdfs:comment "Катастрофическое событие, уничтожившее Золотой Век человечества."@ru, 
+        "Catastrophic event that destroyed humanity's Golden Age."@en ;
+    crm:P11_had_participant destiny:traveler ;
+    crm:P7_took_place_at destiny:solar_system ;
+    crm:P9_consists_of destiny:traveler_shard_loss .
+
+destiny:traveler_shard_loss a destiny:GameEvent ;
+    rdfs:label "Странник потерял осколок"@ru, 
+        "Traveler lost shard"@en ;
+    rdfs:comment "Во время Коллапса Странник потерял часть себя, которая упала на Землю в место, позже названное Европейской мертвой зоной."@ru, 
+        "During the Collapse, the Traveler lost a part of itself, which fell to Earth in a place later called the European Dead Zone."@en ;
+    crm:P11_had_participant destiny:traveler ;
+    crm:P108_has_produced destiny:traveler_shard ;
+    crm:P7_took_place_at destiny:solar_system .
 
 destiny:red_war_arc a destiny:GameEventArc ;
     rdfs:label "Арка Красной войны"@ru, 
         "Red War Arc"@en ;
-    rdfs:comment "Война между Кабал и человечеством, начавшаяся с нападения на Последний город."@ru, "War between the Cabal and humanity, beginning with the attack on the Last City."@en ;
-    prov:wasAssociatedWith destiny:ghaul ;
-    prov:wasInformedBy destiny:collapse_arc ;
-    prov:atLocation destiny:earth ;
-    prov:qualifiedAssociation destiny:ghaul_conquer_traveler_light ;
-    destiny:containsEvent destiny:ghaul_attacked_last_city , destiny:ghaul_deployed_almighty , 
+    rdfs:comment "Война между Кабал в лице Красного легиона и человечеством, начавшаяся с нападения на Последний город."@ru, 
+        "War between the Cabal (Red Legion) and humanity, beginning with the attack on the Last City."@en ;
+    crm:P11_had_participant destiny:ghaul ;
+    crm:P183i_starts_after_the_end_of destiny:collapse_arc ;
+    crm:P7_took_place_at destiny:earth ;
+    destiny:clarifiedMotive destiny:ghaul_conquer_traveler_light ;
+    crm:P9_consists_of destiny:ghaul_attacked_last_city , destiny:ghaul_deployed_almighty , 
         destiny:zavala_departed_to_titan , destiny:cayde_departed_to_nessus , destiny:ikora_departed_to_io , 
         destiny:guardians_arrived_at_farm , destiny:guardians_restored_light , destiny:edz_communication_network_was_setup , 
         destiny:zavala_signal_was_received , destiny:guardians_titan_arrival_reunion_occurred , destiny:guardians_retrieved_decryption_cpu , 
@@ -110,47 +165,41 @@ destiny:red_war_arc a destiny:GameEventArc ;
         destiny:guardians_defeated_ghaul , destiny:traveler_awakened_destroyed_ghaul_and_attracted_pyramids , 
         destiny:factions_return_to_last_city , destiny:guardians_calus_trials .
 
-destiny:ghaul_conquer_traveler_light a prov:Association ;
-    rdfs:label "Уточнение: мотив Гоула захватить Свет Странника"@ru,
-        "Clarification: Ghaul's motivation to conquer the Traveler's Light"@en ;
-    rdfs:comment "Уточнение, отражающее, что Гоул хочет захватить Свет Странника."@ru,
-        "Clarification reflecting that Ghaul wants to conquer the Traveler's Light."@en ;
-    prov:agent destiny:ghaul ;
-    prov:hadPlan destiny:conquer_traveler_light .
-
-# События
-# Events
-
-destiny:traveler_shard_loss a destiny:GameEvent ;
-    rdfs:label "Странник потерял осколок"@ru, 
-        "Traveler lost shard"@en ;
-    rdfs:comment "Во время Коллапса Странник потерял часть себя, которая упала на Землю в место, позже названное Европейской мертвой зоной."@ru, "During the Collapse, the Traveler lost a part of itself, which fell to Earth in a place later called the European Dead Zone."@en ;
-    prov:wasAssociatedWith destiny:traveler ;
-    prov:atLocation destiny:solar_system .
+destiny:ghaul_conquer_traveler_light a destiny:ClarifiedMotive ;
+    rdfs:label "Мотив Гоула захватить Свет Странника"@ru,
+        "Ghaul's motivation to conquer the Traveler's Light"@en ;
+    rdfs:comment "Мотив Гоула захватить Свет Странника."@ru,
+        "Ghaul's motivation to conquer the Traveler's Light."@en ;
+    destiny:character destiny:ghaul ;
+    destiny:hasMotive destiny:conquer_traveler_light .
 
 destiny:ghaul_attacked_last_city a destiny:GameEvent ;
     rdfs:label "Гоул напал на Последний город"@ru, 
         "Ghaul attacked the Last City"@en ;
     rdfs:comment "Гоул, командующий Красным легионом, напал на Последний город, захватил его и Глашатая, использовал устройство для лишения Стражей их Света."@ru, 
         "Ghaul, commander of the Red Legion, attacked the Last City, captured it and the Speaker, used a device to strip Guardians of their Light."@en ;
-    prov:wasAssociatedWith destiny:ghaul , destiny:red_legion , destiny:guardians , destiny:traveler , destiny:speaker ;
-    prov:atLocation destiny:last_city ;
-    prov:used destiny:light_suppression_device ;
-    prov:qualifiedAssociation destiny:ghaul_conquer_traveler_light .
+    crm:P11_had_participant destiny:ghaul , destiny:red_legion , destiny:guardians , destiny:traveler , destiny:speaker ;
+    crm:P7_took_place_at destiny:last_city ;
+    crm:P16_used_specific_object destiny:light_suppression_device ;
+    crm:P9_consists_of [
+        a crm:E69_Death ;
+        crm:P100_was_death_of destiny:peacekeepers_order
+    ] ;
+    destiny:clarifiedMotive destiny:ghaul_conquer_traveler_light .
 
 destiny:ghaul_deployed_almighty a destiny:GameEvent ;
     rdfs:label "Гоул разместил Всемогущий рядом с Солнцем"@ru, 
         "Ghaul deployed the Almighty near the Sun"@en ;
     rdfs:comment "Гоул разместил устройство Всемогущий рядом с Солнцем с целью уничтожить его, если Странник не поддастся его требованиям."@ru, 
         "Ghaul deployed the Almighty device near the Sun with the goal of destroying it if the Traveler does not submit to his demands."@en ;
-    prov:wasAssociatedWith destiny:ghaul ;
-    prov:wasInformedBy destiny:ghaul_attacked_last_city ;
-    prov:atLocation destiny:solar_system ;
-    prov:used destiny:almighty ;
-    prov:qualifiedAssociation [
-        a prov:Association ;
-        prov:agent destiny:ghaul ;
-        prov:hadPlan destiny:threaten_solar_system_destruction
+    crm:P11_had_participant destiny:ghaul ;
+    crm:P183i_starts_after_the_end_of destiny:ghaul_attacked_last_city ;
+    crm:P7_took_place_at destiny:solar_system ;
+    crm:P16_used_specific_object destiny:almighty ;
+    destiny:clarifiedMotive [
+        a destiny:ClarifiedMotive ;
+        destiny:character destiny:ghaul ;
+        destiny:hasMotive destiny:threaten_solar_system_destruction
     ] .
 
 destiny:zavala_departed_to_titan a destiny:GameEvent ;
@@ -158,13 +207,13 @@ destiny:zavala_departed_to_titan a destiny:GameEvent ;
         "Zavala departed to Titan"@en ;
     rdfs:comment "После падения Последнего города Завала отправился на Титан, чтобы найти убежище и собрать силы."@ru, 
         "After the fall of the Last City, Zavala departed to Titan to find refuge and gather forces."@en ;
-    prov:wasAssociatedWith destiny:zavala ;
-    prov:wasInformedBy destiny:ghaul_attacked_last_city ;
-    prov:atLocation destiny:titan ;
-    prov:qualifiedAssociation [
-        a prov:Association ;
-        prov:agent destiny:zavala ;
-        prov:hadPlan destiny:gather_forces_on_titan
+    crm:P11_had_participant destiny:zavala ;
+    crm:P183i_starts_after_the_end_of destiny:ghaul_attacked_last_city ;
+    crm:P7_took_place_at destiny:titan ;
+    destiny:clarifiedMotive [
+        a destiny:ClarifiedMotive ;
+        destiny:character destiny:zavala ;
+        destiny:hasMotive destiny:gather_forces_on_titan
     ] .
 
 destiny:cayde_departed_to_nessus a destiny:GameEvent ;
@@ -172,22 +221,22 @@ destiny:cayde_departed_to_nessus a destiny:GameEvent ;
         "Cayde departed to Nessus"@en ;
     rdfs:comment "После падения Последнего города Кейд отправился на Несс."@ru, 
         "After the fall of the Last City, Cayde departed to Nessus."@en ;
-    prov:wasAssociatedWith destiny:cayde ;
-    prov:wasInformedBy destiny:ghaul_attacked_last_city ;
-    prov:atLocation destiny:nessus .
+    crm:P11_had_participant destiny:cayde ;
+    crm:P183i_starts_after_the_end_of destiny:ghaul_attacked_last_city ;
+    crm:P7_took_place_at destiny:nessus .
 
 destiny:ikora_departed_to_io a destiny:GameEvent ;
     rdfs:label "Икора отправилась на Ио"@ru, 
         "Ikora departed to Io"@en ;
     rdfs:comment "После падения Последнего города Икора отправилась на Ио в поисках ответов, так как это последнее место, где был Странник."@ru, 
         "After the fall of the Last City, Ikora departed to Io seeking answers, as this is the last place the Traveler touched."@en ;
-    prov:wasAssociatedWith destiny:ikora ;
-    prov:wasInformedBy destiny:ghaul_attacked_last_city ;
-    prov:atLocation destiny:io ;
-    prov:qualifiedAssociation [
-        a prov:Association ;
-        prov:agent destiny:ikora ;
-        prov:hadPlan destiny:seek_traveler_answers_on_io
+    crm:P11_had_participant destiny:ikora ;
+    crm:P183i_starts_after_the_end_of destiny:ghaul_attacked_last_city ;
+    crm:P7_took_place_at destiny:io ;
+    destiny:clarifiedMotive [
+        a destiny:ClarifiedMotive ;
+        destiny:character destiny:ikora ;
+        destiny:hasMotive destiny:seek_traveler_answers_on_io
     ] .
 
 destiny:guardians_reunited_with_ikora_on_io a destiny:GameEvent ;
@@ -195,13 +244,13 @@ destiny:guardians_reunited_with_ikora_on_io a destiny:GameEvent ;
         "Guardians reunited with Ikora on Io"@en ;
     rdfs:comment "Стражи нашли Икору на Ио в Потерянном оазисе, последнем месте, где был Странник. Икора рассказала о том, что Красный легион ищет что-то, что они никогда не смогут понять."@ru, 
         "Guardians found Ikora on Io in the Lost Oasis, the last place the Traveler touched. Ikora told them that the Red Legion is searching for something they could never possibly understand."@en ;
-    prov:wasAssociatedWith destiny:guardians , destiny:ikora ;
-    prov:wasInformedBy destiny:guardians_gave_cayde_vex_teleporter , destiny:ikora_departed_to_io ;
-    prov:atLocation destiny:io ;
-    prov:qualifiedAssociation [
-        a prov:Association ;
-        prov:agent destiny:guardians ;
-        prov:hadPlan destiny:complete_vanguard_reunion
+    crm:P11_had_participant destiny:guardians , destiny:ikora ;
+    crm:P183i_starts_after_the_end_of destiny:guardians_gave_cayde_vex_teleporter , destiny:ikora_departed_to_io ;
+    crm:P7_took_place_at destiny:io ;
+    destiny:clarifiedMotive [
+        a destiny:ClarifiedMotive ;
+        destiny:character destiny:guardians ;
+        destiny:hasMotive destiny:complete_vanguard_reunion
     ] .
 
 destiny:red_legion_mined_traveler_energy_on_io a destiny:GameEvent ;
@@ -209,13 +258,13 @@ destiny:red_legion_mined_traveler_energy_on_io a destiny:GameEvent ;
         "Red Legion mined Traveler's energy on Io"@en ;
     rdfs:comment "Красный легион добыл остаточную энергию Странника на Ио, пытаясь трансформировать себя в носителей Света, как Орикс трансформировал Одержимых с помощью темных сил."@ru, 
         "The Red Legion mined the Traveler's remnant energy on Io, attempting to transform themselves into wielders of Light, as Oryx transformed the Taken with dark powers."@en ;
-    prov:wasAssociatedWith destiny:red_legion , destiny:ghaul ;
-    prov:wasInformedBy destiny:ghaul_attacked_last_city ;
-    prov:atLocation destiny:io ;
-    prov:qualifiedAssociation [
-        a prov:Association ;
-        prov:agent destiny:ghaul ;
-        prov:hadPlan destiny:transform_legion_with_light
+    crm:P11_had_participant destiny:red_legion , destiny:ghaul ;
+    crm:P183i_starts_after_the_end_of destiny:ghaul_attacked_last_city ;
+    crm:P7_took_place_at destiny:io ;
+    destiny:clarifiedMotive [
+        a destiny:ClarifiedMotive ;
+        destiny:character destiny:ghaul ;
+        destiny:hasMotive destiny:transform_legion_with_light
     ] .
 
 destiny:taken_invaded_io a destiny:GameEvent ;
@@ -223,13 +272,14 @@ destiny:taken_invaded_io a destiny:GameEvent ;
         "Taken invasion of Io"@en ;
     rdfs:comment "Одержимые привлечены энергией Странника на Ио, раскопанной Красным легионом, и создают порталы для призыва своих сил."@ru, 
         "The Taken are drawn to the Traveler's energy on Io, mined by the Red Legion, and are creating portals to summon their forces."@en ;
-    prov:wasAssociatedWith destiny:taken ;
-    prov:wasInformedBy destiny:red_legion_mined_traveler_energy_on_io ;
-    prov:atLocation destiny:io ;
-    prov:qualifiedAssociation [
-        a prov:Association ;
-        prov:agent destiny:taken ;
-        prov:hadPlan destiny:consume_light_on_io
+    crm:P11_had_participant destiny:taken ;
+    crm:P183i_starts_after_the_end_of destiny:red_legion_mined_traveler_energy_on_io ;
+    crm:P7_took_place_at destiny:io ;
+    crm:P108_has_produced destiny:prevent_io_implosion ;
+    destiny:clarifiedMotive [
+        a destiny:ClarifiedMotive ;
+        destiny:character destiny:taken ;
+        destiny:hasMotive destiny:consume_light_on_io
     ] .
 
 destiny:guardians_and_ikora_understood_ghaul_plan a destiny:GameEvent ;
@@ -237,29 +287,30 @@ destiny:guardians_and_ikora_understood_ghaul_plan a destiny:GameEvent ;
         "Guardians and Ikora understood Ghaul's plan about transforming themselves and the Red Legion into wielders of Light"@en ;
     rdfs:comment "Стражи и Икора поняли, что Гоул добывает остаточную энергию Странника на Ио в надежде трансформировать себя и Красный легион в носителей Света, как Орикс трансформировал Одержимых с помощью темных сил."@ru, 
         "Guardians and Ikora understood that Ghaul is mining the Traveler's remnant energy on Io in hopes of transforming himself and the Red Legion into wielders of Light, as Oryx transformed the Taken with dark powers."@en ;
-    prov:wasAssociatedWith destiny:guardians , destiny:ikora ;
-    prov:wasInformedBy destiny:red_legion_mined_traveler_energy_on_io , destiny:taken_invaded_io , destiny:guardians_reunited_with_ikora_on_io ;
-    prov:atLocation destiny:io ;
-    prov:used destiny:transform_legion_with_light .
+    crm:P11_had_participant destiny:guardians , destiny:ikora ;
+    crm:P183i_starts_after_the_end_of destiny:red_legion_mined_traveler_energy_on_io , 
+        destiny:taken_invaded_io , destiny:guardians_reunited_with_ikora_on_io ;
+    crm:P7_took_place_at destiny:io ;
+    crm:P16_used_specific_object destiny:transform_legion_with_light .
 
 destiny:guardians_accessed_warmind_vault a destiny:GameEvent ;
     rdfs:label "Стражи получили доступ к Военному Разуму"@ru, 
         "Guardians accessed Warmind"@en ;
     rdfs:comment "Стражи проникли к Военному Разуму на Ио через туннель, открытый буром Красного легиона, чтобы использовать сканер для анализа Всемогущего."@ru, 
         "Guardians accessed the Warmind on Io through a tunnel exposed by the Red Legion drill to use the scanner for analyzing the Almighty."@en ;
-    prov:wasAssociatedWith destiny:guardians , destiny:asher_mir, destiny:ikora , destiny:zavala ;
-    prov:wasInformedBy destiny:guardians_and_ikora_understood_ghaul_plan ;
-    prov:atLocation destiny:io ;
-    prov:used destiny:warmind ;
-    prov:qualifiedAssociation [
-        a prov:Association ;
-        prov:agent destiny:asher_mir ;
-        prov:hadPlan destiny:discredit_zavala_plan
+    crm:P11_had_participant destiny:guardians , destiny:asher_mir, destiny:ikora , destiny:zavala ;
+    crm:P183i_starts_after_the_end_of destiny:guardians_and_ikora_understood_ghaul_plan ;
+    crm:P7_took_place_at destiny:io ;
+    crm:P16_used_specific_object destiny:warmind ;
+    destiny:clarifiedMotive [
+        a destiny:ClarifiedMotive ;
+        destiny:character destiny:asher_mir ;
+        destiny:hasMotive destiny:discredit_zavala_plan
     ] ,
     [
-        a prov:Association ;
-        prov:agent destiny:zavala ;
-        prov:hadPlan destiny:attack_almighty_with_warmind_data
+        a destiny:ClarifiedMotive ;
+        destiny:character destiny:zavala ;
+        destiny:hasMotive destiny:attack_almighty_with_warmind_data
     ] .
 
 destiny:warmind_network_scan_revealed_almighty_danger a destiny:GameEvent ;
@@ -267,33 +318,33 @@ destiny:warmind_network_scan_revealed_almighty_danger a destiny:GameEvent ;
         "Warmind network scan revealed Almighty danger"@en ;
     rdfs:comment "Сканирование Военного Разума показало, что Всемогущий неразрывно связан с гармоническим резонансом магнитных потоковых трубок Солнца. Если Всемогущий будет уничтожен, то это уничтожит Солнце."@ru, 
         "The Warmind scan revealed that the Almighty is inextricably bound to the harmonic resonance of the sun's magnetic flux tubes. If the Almighty is destroyed, it will take the sun with it."@en ;
-    prov:wasAssociatedWith destiny:guardians , destiny:asher_mir , destiny:vanguard ;
-    prov:wasInformedBy destiny:guardians_accessed_warmind_vault ;
-    prov:atLocation destiny:io ;
-    prov:used destiny:warmind , destiny:almighty .
+    crm:P11_had_participant destiny:guardians , destiny:asher_mir , destiny:vanguard ;
+    crm:P183i_starts_after_the_end_of destiny:guardians_accessed_warmind_vault ;
+    crm:P7_took_place_at destiny:io ;
+    crm:P16_used_specific_object destiny:warmind , destiny:almighty .
 
 destiny:ghaul_interrogated_speaker_and_learned_io_success a destiny:GameEvent ;
     rdfs:label "Гоул допрашивал Глашатая о Свете и узнал об успехе операции на Ио"@ru, 
         "Ghaul interrogated Speaker about Light and learned of Io operation success"@en ;
     rdfs:comment "Гоул допрашивал Глашатая, спрашивая, что делает Стражей достойными Света. Глашатай ответил: 'Преданность. Самопожертвование. Смерть.' Также Гоул узнал от Консула, что операция на Ио прошла успешно и клетка почти завершена."@ru, 
         "Ghaul interrogated the Speaker, asking what makes Guardians worthy of the Light. The Speaker answered: 'Devotion. Self-Sacrifice. Death.' Ghaul also learned from the Consul that the Io operation was successful and the cage is nearly complete."@en ;
-    prov:wasAssociatedWith destiny:ghaul , destiny:speaker , destiny:consul ;
-    prov:wasInformedBy destiny:red_legion_mined_traveler_energy_on_io ;
-    prov:atLocation destiny:the_immortal ;
-    prov:qualifiedAssociation destiny:ghaul_conquer_traveler_light .
+    crm:P11_had_participant destiny:ghaul , destiny:speaker , destiny:consul ;
+    crm:P183i_starts_after_the_end_of destiny:red_legion_mined_traveler_energy_on_io ;
+    crm:P7_took_place_at destiny:the_immortal ;
+    destiny:clarifiedMotive destiny:ghaul_conquer_traveler_light .
 
 destiny:vanguard_reunited_at_farm a destiny:GameEvent ;
     rdfs:label "Авангард воссоединился на Ферме"@ru, 
         "Vanguard reunited at the Farm"@en ;
     rdfs:comment "Завала, Икора и Кейд воссоединились на Ферме после долгого разделения. Они обсудили угрозу Всемогущего и необходимость освобождения Странника."@ru, 
         "Zavala, Ikora and Cayde reunited at the Farm after a long separation. They discussed the threat of the Almighty and the need to free the Traveler."@en ;
-    prov:wasAssociatedWith destiny:vanguard , destiny:guardians ;
-    prov:wasInformedBy destiny:warmind_network_scan_revealed_almighty_danger , destiny:guardians_gave_cayde_vex_teleporter ;
-    prov:atLocation destiny:the_farm ;
-    prov:qualifiedAssociation [
-        a prov:Association ;
-        prov:agent destiny:vanguard ;
-        prov:hadPlan destiny:disable_almighty_instead_of_destroy
+    crm:P11_had_participant destiny:vanguard , destiny:guardians ;
+    crm:P183i_starts_after_the_end_of destiny:warmind_network_scan_revealed_almighty_danger , destiny:guardians_gave_cayde_vex_teleporter ;
+    crm:P7_took_place_at destiny:the_farm ;
+    destiny:clarifiedMotive [
+        a destiny:ClarifiedMotive ;
+        destiny:character destiny:vanguard ;
+        destiny:hasMotive destiny:disable_almighty_instead_of_destroy
     ] .
 
 destiny:hawthorne_offered_infiltration_help a destiny:GameEvent ;
@@ -301,13 +352,13 @@ destiny:hawthorne_offered_infiltration_help a destiny:GameEvent ;
         "Hawthorne offered infiltration help"@en ;
     rdfs:comment "Хоторн предложила помочь Стражам проникнуть в город незаметно, используя свои знания о стенах города и навыки скрытного проникновения."@ru, 
         "Hawthorne offered to help Guardians infiltrate the city unnoticed, using her knowledge of city walls and stealth infiltration skills."@en ;
-    prov:wasAssociatedWith destiny:hawthorne, destiny:vanguard , destiny:guardians ;
-    prov:wasInformedBy destiny:vanguard_reunited_at_farm ;
-    prov:atLocation destiny:the_farm ;
-    prov:qualifiedAssociation [
-        a prov:Association ;
-        prov:agent destiny:hawthorne ;
-        prov:hadPlan destiny:help_guardians_infiltrate_city
+    crm:P11_had_participant destiny:hawthorne, destiny:vanguard , destiny:guardians ;
+    crm:P183i_starts_after_the_end_of destiny:vanguard_reunited_at_farm ;
+    crm:P7_took_place_at destiny:the_farm ;
+    destiny:clarifiedMotive [
+        a destiny:ClarifiedMotive ;
+        destiny:character destiny:hawthorne ;
+        destiny:hasMotive destiny:help_guardians_infiltrate_city
     ] .
 
 destiny:vanguard_executed_counteroffensive_against_city a destiny:GameEvent ;
@@ -315,13 +366,13 @@ destiny:vanguard_executed_counteroffensive_against_city a destiny:GameEvent ;
         "Vanguard executed counteroffensive against the city"@en ;
     rdfs:comment "Авангард возглавил армию Стражей без Света в контрнаступлении против оккупированного города, надеясь освободить Странника."@ru, 
         "The Vanguard led a host of Lightless Guardians in a counteroffensive against the occupied City, hoping to free the Traveler."@en ;
-    prov:wasAssociatedWith destiny:hawthorne , destiny:vanguard ;
-    prov:wasInformedBy destiny:hawthorne_offered_infiltration_help , destiny:guardians_fought_and_disabled_almighty ;
-    prov:atLocation destiny:last_city ;
-    prov:qualifiedAssociation [
-        a prov:Association ;
-        prov:agent destiny:vanguard, destiny:hawthorne ;
-        prov:hadPlan destiny:free_occupied_city
+    crm:P11_had_participant destiny:hawthorne , destiny:vanguard ;
+    crm:P183i_starts_after_the_end_of destiny:hawthorne_offered_infiltration_help , destiny:guardians_fought_and_disabled_almighty ;
+    crm:P7_took_place_at destiny:last_city ;
+    destiny:clarifiedMotive [
+        a destiny:ClarifiedMotive ;
+        destiny:character destiny:vanguard, destiny:hawthorne ;
+        destiny:hasMotive destiny:free_occupied_city
     ] .
 
 destiny:guardians_captured_thumos_ship_keys_for_almighty_approach a destiny:GameEvent ;
@@ -329,25 +380,29 @@ destiny:guardians_captured_thumos_ship_keys_for_almighty_approach a destiny:Game
         "Guardians captured Thumos ship keys to approach Almighty unnoticed"@en ;
     rdfs:comment "Стражи получили задание отключить супероружие Всемогущий и для этого должны были украсть корабль Тумоса Несломленного. Аманда Холлидей доставила им танк, с помощью которого они штурмовали объект Кабал, проникли на борт корабля Эхион, победили Тумоса и получили ключи доступа к его кораблю для незаметного приближения к Всемогущему."@ru, 
         "Guardians were tasked to disable the Almighty superweapon and for this had to steal the ship of Thumos the Unbroken. Amanda Holliday delivered them a tank, with which they stormed the Cabal facility, infiltrated the Echion ship, defeated Thumos and obtained key codes to his ship for undetected approach to the Almighty."@en ;
-    prov:wasAssociatedWith destiny:guardians , destiny:thumos_unbroken , destiny:amanda_holliday , 
+    crm:P11_had_participant destiny:guardians , destiny:thumos_unbroken , destiny:amanda_holliday , 
         destiny:red_legion , destiny:hawthorne ;
-    prov:wasInformedBy destiny:vanguard_reunited_at_farm ;
-    prov:atLocation destiny:european_dead_zone ;
-    prov:used destiny:thumos_key_codes ;
-    prov:qualifiedAssociation [
-        a prov:Association ;
-        prov:agent destiny:guardians ;
-        prov:hadPlan destiny:disable_almighty_instead_of_destroy
+    crm:P183i_starts_after_the_end_of destiny:vanguard_reunited_at_farm ;
+    crm:P7_took_place_at destiny:european_dead_zone ;
+    crm:P16_used_specific_object destiny:thumos_key_codes ;
+    crm:P9_consists_of [
+        a crm:E69_Death ;
+        crm:P100_was_death_of destiny:thumos_unbroken
+    ] ;
+    destiny:clarifiedMotive [
+        a destiny:ClarifiedMotive ;
+        destiny:character destiny:guardians ;
+        destiny:hasMotive destiny:disable_almighty_instead_of_destroy
     ] ,
     [
-        a prov:Association ;
-        prov:agent destiny:amanda_holliday ;
-        prov:hadPlan destiny:provide_tank_and_air_support
+        a destiny:ClarifiedMotive ;
+        destiny:character destiny:amanda_holliday ;
+        destiny:hasMotive destiny:provide_tank_and_air_support
     ] ,
     [
-        a prov:Association ;
-        prov:agent destiny:hawthorne ;
-        prov:hadPlan destiny:revenge_for_killed_team
+        a destiny:ClarifiedMotive ;
+        destiny:character destiny:hawthorne ;
+        destiny:hasMotive destiny:revenge_for_killed_team
     ] .
 
 destiny:guardians_stole_thumos_ship_and_departed_to_almighty a destiny:GameEvent ;
@@ -355,14 +410,14 @@ destiny:guardians_stole_thumos_ship_and_departed_to_almighty a destiny:GameEvent
         "Guardians stole Thumos's ship and departed to the Almighty"@en ;
     rdfs:comment "Стражи использовали украденные ключи доступа для захвата корабля Тумоса Несломленного и отправились на Всемогущий для отключения Всемогущего."@ru, 
         "Guardians used the stolen key codes to hijack the ship of Thumos the Unbroken and departed to the Almighty to disable the Almighty."@en ;
-    prov:wasAssociatedWith destiny:guardians , destiny:red_legion ;
-    prov:wasInformedBy destiny:guardians_captured_thumos_ship_keys_for_almighty_approach ;
-    prov:atLocation destiny:european_dead_zone ;
-    prov:used destiny:thumos_key_codes , destiny:thumos_ship ;
-    prov:qualifiedAssociation [
-        a prov:Association ;
-        prov:agent destiny:guardians ;
-        prov:hadPlan destiny:disable_almighty_instead_of_destroy
+    crm:P11_had_participant destiny:guardians , destiny:red_legion ;
+    crm:P183i_starts_after_the_end_of destiny:guardians_captured_thumos_ship_keys_for_almighty_approach ;
+    crm:P7_took_place_at destiny:european_dead_zone ;
+    crm:P16_used_specific_object destiny:thumos_key_codes , destiny:thumos_ship ;
+    destiny:clarifiedMotive [
+        a destiny:ClarifiedMotive ;
+        destiny:character destiny:guardians ;
+        destiny:hasMotive destiny:disable_almighty_instead_of_destroy
     ] .
 
 destiny:guardians_fought_and_disabled_almighty a destiny:GameEvent ;
@@ -370,14 +425,14 @@ destiny:guardians_fought_and_disabled_almighty a destiny:GameEvent ;
         "Guardians fought and disabled the Almighty"@en ;
     rdfs:comment "Стражи проникли на Всемогущий, обнаружили, что Меркурий используется как топливо, уничтожили тепловые обменники и перегрузили электронный резервуар, полностью отключив оружие Всемогущего."@ru, 
         "Guardians infiltrated the Almighty, discovered that Mercury was being used as fuel, destroyed thermal exchangers and overloaded the electron reservoir, completely disabling the Almighty's weapon."@en ;
-    prov:wasAssociatedWith destiny:guardians , destiny:red_legion ;
-    prov:wasInformedBy destiny:guardians_stole_thumos_ship_and_departed_to_almighty ;
-    prov:atLocation destiny:almighty ;
-    prov:used destiny:almighty ;
-    prov:qualifiedAssociation [
-        a prov:Association ;
-        prov:agent destiny:guardians ;
-        prov:hadPlan destiny:disable_almighty_instead_of_destroy
+    crm:P11_had_participant destiny:guardians , destiny:red_legion ;
+    crm:P183i_starts_after_the_end_of destiny:guardians_stole_thumos_ship_and_departed_to_almighty ;
+    crm:P7_took_place_at destiny:almighty ;
+    crm:P16_used_specific_object destiny:almighty ;
+    destiny:clarifiedMotive [
+        a destiny:ClarifiedMotive ;
+        destiny:character destiny:guardians ;
+        destiny:hasMotive destiny:disable_almighty_instead_of_destroy
     ] .
 
 destiny:consul_and_speaker_were_killed a destiny:GameEvent ;
@@ -385,18 +440,22 @@ destiny:consul_and_speaker_were_killed a destiny:GameEvent ;
         "Consul and Speaker were killed"@en ;
     rdfs:comment "После потери Всемогущего Консул обвинил Гоула в неудаче и потребовал, чтобы он взял Свет силой, а затем убил Глашатая. После этого Гоул задушил Консула."@ru, 
         "After losing the Almighty, the Consul blamed Ghaul for the failure and demanded that he take the Light by force. Ghaul killed the Speaker who admitted he never spoke to the Traveler, then smothered the Consul."@en ;
-    prov:wasAssociatedWith destiny:ghaul , destiny:consul , destiny:speaker ;
-    prov:wasInformedBy destiny:guardians_fought_and_disabled_almighty , destiny:ghaul_interrogated_speaker_and_learned_io_success ;
-    prov:atLocation destiny:the_immortal ;
-    prov:qualifiedAssociation [
-        a prov:Association ;
-        prov:agent destiny:consul ;
-        prov:hadPlan destiny:force_ghaul_to_take_light
+    crm:P11_had_participant destiny:ghaul , destiny:consul , destiny:speaker ;
+    crm:P183i_starts_after_the_end_of destiny:guardians_fought_and_disabled_almighty , destiny:ghaul_interrogated_speaker_and_learned_io_success ;
+    crm:P7_took_place_at destiny:the_immortal ;
+    crm:P9_consists_of [
+        a crm:E69_Death ;
+        crm:P100_was_death_of destiny:consul
+    ] ;
+    destiny:clarifiedMotive [
+        a destiny:ClarifiedMotive ;
+        destiny:character destiny:consul ;
+        destiny:hasMotive destiny:force_ghaul_to_take_light
     ] ,
     [
-        a prov:Association ;
-        prov:agent destiny:ghaul ;
-        prov:hadPlan destiny:eliminate_disobedient_advisor
+        a destiny:ClarifiedMotive ;
+        destiny:character destiny:ghaul ;
+        destiny:hasMotive destiny:eliminate_disobedient_advisor
     ] .
 
 destiny:guardians_joined_counteroffensive_and_activated_teleporter a destiny:GameEvent ;
@@ -404,15 +463,15 @@ destiny:guardians_joined_counteroffensive_and_activated_teleporter a destiny:Gam
         "Guardians joined counteroffensive on Last City and activated teleporter to Ghaul's ship"@en ;
     rdfs:comment "Стражи вернулись в Последний город, где Красный легион использовал энергетические барьеры для направления их в ловушки. Хоторн взламывала сеть и отключала барьеры, а Авангард достиг точки сбора, где Кейд активировал телепортер вексов для перехода к Страннику."@ru, 
         "Guardians returned to the Last City where the Red Legion used energy barriers to funnel them into kill boxes. Hawthorne hacked the grid and knocked down barriers, and the Vanguard reached the rally point where Cayde activated the Vex teleporter for transition to the Traveler."@en ;
-    prov:wasAssociatedWith destiny:guardians , destiny:hawthorne , destiny:vanguard , destiny:red_legion ;
-    prov:wasInformedBy destiny:vanguard_executed_counteroffensive_against_city , destiny:guardians_fought_and_disabled_almighty ;
-    prov:atLocation destiny:last_city ;
-    prov:used destiny:vex_teleporter ;
-    prov:qualifiedAssociation
+    crm:P11_had_participant destiny:guardians , destiny:hawthorne , destiny:vanguard , destiny:red_legion ;
+    crm:P183i_starts_after_the_end_of destiny:vanguard_executed_counteroffensive_against_city , destiny:guardians_fought_and_disabled_almighty ;
+    crm:P7_took_place_at destiny:last_city ;
+    crm:P16_used_specific_object destiny:vex_teleporter ;
+    destiny:clarifiedMotive
     [
-        a prov:Association ;
-        prov:agent destiny:guardians , destiny:hawthorne , destiny:vanguard ;
-        prov:hadPlan destiny:free_traveler_and_occupied_city
+        a destiny:ClarifiedMotive ;
+        destiny:character destiny:guardians , destiny:hawthorne , destiny:vanguard ;
+        destiny:hasMotive destiny:free_traveler_and_occupied_city
     ] .
 
 destiny:guardians_defeated_ghaul a destiny:GameEvent ;
@@ -420,14 +479,14 @@ destiny:guardians_defeated_ghaul a destiny:GameEvent ;
         "Guardians defeated Ghaul"@en ;
     rdfs:comment "Стражи использовали телепортер вексов для перехода на командный корабль Гоула 'Бессмертный', пробились через силы Кабал и достигли вершины корабля, где встретили Доминуса Гоула, который объявил себя носителем Света. В финальной битве Гоул был повержен."@ru, 
         "Guardians used the Vex teleporter to transition to Ghaul's command ship 'The Immortal', fought through Cabal forces and reached the top of the ship where they encountered Dominus Ghaul who declared himself a wielder of Light. In the final battle, Ghaul was defeated."@en ;
-    prov:wasAssociatedWith destiny:guardians , destiny:ghaul , destiny:red_legion ;
-    prov:wasInformedBy destiny:guardians_joined_counteroffensive_and_activated_teleporter , destiny:consul_and_speaker_were_killed ;
-    prov:atLocation destiny:the_immortal ;
-    prov:used destiny:vex_teleporter ;
-    prov:qualifiedAssociation [
-        a prov:Association ;
-        prov:agent destiny:guardians ;
-        prov:hadPlan destiny:free_traveler_and_occupied_city
+    crm:P11_had_participant destiny:guardians , destiny:ghaul , destiny:red_legion ;
+    crm:P183i_starts_after_the_end_of destiny:guardians_joined_counteroffensive_and_activated_teleporter , destiny:consul_and_speaker_were_killed ;
+    crm:P7_took_place_at destiny:the_immortal ;
+    crm:P16_used_specific_object destiny:vex_teleporter ;
+    destiny:clarifiedMotive [
+        a destiny:ClarifiedMotive ;
+        destiny:character destiny:guardians ;
+        destiny:hasMotive destiny:free_traveler_and_occupied_city
     ] , destiny:ghaul_conquer_traveler_light .
 
 destiny:traveler_awakened_destroyed_ghaul_and_attracted_pyramids a destiny:GameEvent ;
@@ -435,13 +494,17 @@ destiny:traveler_awakened_destroyed_ghaul_and_attracted_pyramids a destiny:GameE
         "Traveler awakened, destroyed Ghaul and attracted Pyramids' attention"@en ;
     rdfs:comment "После поражения Гоула в битве со Стражами, он попытался поглотить Свет и объявил себя бессмертным богом. Странник пробудился от сна, разрушил клетку вокруг себя и уничтожил Гоула взрывом Света, который распространился по всей галактике и за её пределы до флота Пирамид."@ru, 
         "After Ghaul's defeat in battle with Guardians, he attempted to absorb the Light and declared himself an immortal god. The Traveler awakened from slumber, broke the cage surrounding it and destroyed Ghaul with an explosion of Light that spread throughout the galaxy and beyond, reaching a fleet of pyramids."@en ;
-    prov:wasAssociatedWith destiny:traveler , destiny:ghaul , destiny:pyramids ;
-    prov:wasInformedBy destiny:guardians_defeated_ghaul ;
-    prov:atLocation destiny:the_immortal ;
-    prov:qualifiedAssociation [
-        a prov:Association ;
-        prov:agent destiny:traveler ;
-        prov:hadPlan destiny:protect_humanity_from_ghaul
+    crm:P11_had_participant destiny:traveler , destiny:ghaul , destiny:pyramids ;
+    crm:P183i_starts_after_the_end_of destiny:guardians_defeated_ghaul ;
+    crm:P7_took_place_at destiny:the_immortal ;
+    crm:P9_consists_of [
+        a crm:E69_Death ;
+        crm:P100_was_death_of destiny:ghaul ;
+    ] ;
+    destiny:clarifiedMotive [
+        a destiny:ClarifiedMotive ;
+        destiny:character destiny:traveler ;
+        destiny:hasMotive destiny:protect_humanity_from_ghaul
     ] .
 
 destiny:zavala_signal_was_received a destiny:GameEvent ;
@@ -449,13 +512,13 @@ destiny:zavala_signal_was_received a destiny:GameEvent ;
         "Guardians received Zavala's signal"@en ;
     rdfs:comment "Стражи и Хоторн получили сигнал от Завалы с Титана, призывающий собраться на Титане."@ru, 
         "Guardians and Hawthorne received a signal from Zavala on Titan, calling to rally on Titan."@en ;
-    prov:wasAssociatedWith destiny:zavala , destiny:guardians , destiny:hawthorne ;
-    prov:wasInformedBy destiny:edz_communication_network_was_setup , destiny:zavala_departed_to_titan ;
-    prov:atLocation destiny:european_dead_zone ;
-    prov:qualifiedAssociation [
-        a prov:Association ;
-        prov:agent destiny:zavala ;
-        prov:hadPlan destiny:rally_guardians_on_titan
+    crm:P11_had_participant destiny:zavala , destiny:guardians , destiny:hawthorne ;
+    crm:P183i_starts_after_the_end_of destiny:edz_communication_network_was_setup , destiny:zavala_departed_to_titan ;
+    crm:P7_took_place_at destiny:european_dead_zone ;
+    destiny:clarifiedMotive [
+        a destiny:ClarifiedMotive ;
+        destiny:character destiny:zavala ;
+        destiny:hasMotive destiny:rally_guardians_on_titan
     ] .
 
 destiny:guardians_titan_arrival_reunion_occurred a destiny:GameEvent ;
@@ -463,13 +526,13 @@ destiny:guardians_titan_arrival_reunion_occurred a destiny:GameEvent ;
         "Guardians reunited with Zavala and Sloane on Titan"@en ;
     rdfs:comment "Стражи воссоединились с командующим Завалой и заместителем командующего Слоун и очистили волновые энергетические конвертеры для реактивации командных систем на Риге и расшифровки перехваченного сообщения Красного легиона."@ru, 
         "Guardians reunited with Commander Zavala and Deputy Commander Sloane and cleared the wave energy converters to reactivate the command systems on the Rig and decrypt the intercepted Red Legion communication."@en ;
-    prov:wasAssociatedWith destiny:guardians , destiny:zavala , destiny:sloane , destiny:hive ;
-    prov:wasInformedBy destiny:zavala_signal_was_received , destiny:ghaul_deployed_almighty ;
-    prov:atLocation destiny:titan ;
-    prov:qualifiedAssociation [
-        a prov:Association ;
-        prov:agent destiny:sloane ;
-        prov:hadPlan destiny:reactivate_rig_command_systems
+    crm:P11_had_participant destiny:guardians , destiny:zavala , destiny:sloane , destiny:hive ;
+    crm:P183i_starts_after_the_end_of destiny:zavala_signal_was_received , destiny:ghaul_deployed_almighty ;
+    crm:P7_took_place_at destiny:titan ;
+    destiny:clarifiedMotive [
+        a destiny:ClarifiedMotive ;
+        destiny:character destiny:sloane ;
+        destiny:hasMotive destiny:reactivate_rig_command_systems
     ] .
 
 destiny:guardians_retrieved_decryption_cpu a destiny:GameEvent ;
@@ -477,14 +540,14 @@ destiny:guardians_retrieved_decryption_cpu a destiny:GameEvent ;
         "Guardians retrieved decryption CPU from arcology"@en ;
     rdfs:comment "Стражи проникли в глубины аркологии на Титане, чтобы получить процессор дешифровки для расшифровки сообщения Кабал."@ru, 
         "Guardians ventured deep into the arcology on Titan to retrieve a decryption CPU for decrypting the Cabal message."@en ;
-    prov:wasAssociatedWith destiny:guardians , destiny:hive ;
-    prov:wasInformedBy destiny:guardians_titan_arrival_reunion_occurred ;
-    prov:atLocation destiny:arcology ;
-    prov:used destiny:decryption_cpu ;
-    prov:qualifiedAssociation [
-        a prov:Association ;
-        prov:agent destiny:sloane ;
-        prov:hadPlan destiny:decrypt_cabal_communication
+    crm:P11_had_participant destiny:guardians , destiny:hive ;
+    crm:P183i_starts_after_the_end_of destiny:guardians_titan_arrival_reunion_occurred ;
+    crm:P7_took_place_at destiny:arcology ;
+    crm:P16_used_specific_object destiny:decryption_cpu ;
+    destiny:clarifiedMotive [
+        a destiny:ClarifiedMotive ;
+        destiny:character destiny:sloane ;
+        destiny:hasMotive destiny:decrypt_cabal_communication
     ] .
 
 destiny:sloane_decrypted_signal a destiny:GameEvent ;
@@ -492,14 +555,16 @@ destiny:sloane_decrypted_signal a destiny:GameEvent ;
         "Sloane decrypted Cabal signal"@en ;
     rdfs:comment "Слоун использовала полученную систему дешифровки для расшифровки сообщения Кабал и узнала о плане Гоула использовать Всемогущий для уничтожения Солнца."@ru, 
         "Sloane used the retrieved decryption system to decrypt the Cabal message and learned of Ghaul's plan to use the Almighty to destroy the Sun."@en ;
-    prov:wasAssociatedWith destiny:sloane ;
-    prov:wasInformedBy destiny:guardians_retrieved_decryption_cpu ;
-    prov:atLocation destiny:titan ;
-    prov:used destiny:decryption_cpu , destiny:threaten_solar_system_destruction ;
-    prov:qualifiedAssociation [
-        a prov:Association ;
-        prov:agent destiny:sloane ;
-        prov:hadPlan destiny:learn_ghaul_plan
+    crm:P11_had_participant destiny:sloane ;
+    crm:P183i_starts_after_the_end_of destiny:guardians_retrieved_decryption_cpu ;
+    crm:P7_took_place_at destiny:titan ;
+    crm:P16_used_specific_object destiny:decryption_cpu , destiny:threaten_solar_system_destruction ;
+    crm:P108_has_produced destiny:vanguard_team_reunion_necessity ,
+        destiny:attack_almighty_with_warmind_data ;
+    destiny:clarifiedMotive [
+        a destiny:ClarifiedMotive ;
+        destiny:character destiny:sloane ;
+        destiny:hasMotive destiny:learn_ghaul_plan
     ] .
 
 destiny:guardians_arrived_nessus_search_cayde a destiny:GameEvent ;
@@ -507,13 +572,13 @@ destiny:guardians_arrived_nessus_search_cayde a destiny:GameEvent ;
         "Guardians arrived on Nessus in search of Cayde-6, where they rescued him from the Vex trap"@en ;
     rdfs:comment "После получения странного сигнала Стражи прибыли на центавр Несс в поисках Кейда-6, который оказался заперт в петле телепортации вексов. С помощью Нейроматрицы они вызволили Кейда из ловушки."@ru, 
         "After receiving a strange signal, Guardians arrived on the centaur of Nessus in search of Cayde-6, who has been trapped in a Vex teleportation loop. With the help of the Neural Matrix, they freed Cayde from the trap."@en ;
-    prov:wasAssociatedWith destiny:guardians , destiny:cayde , destiny:vex , destiny:failsafe ;
-    prov:wasInformedBy destiny:sloane_decrypted_signal , destiny:cayde_departed_to_nessus ;
-    prov:atLocation destiny:nessus ;
-    prov:qualifiedAssociation [
-        a prov:Association ;
-        prov:agent destiny:guardians ;
-        prov:hadPlan destiny:vanguard_team_reunion_necessity
+    crm:P11_had_participant destiny:guardians , destiny:cayde , destiny:vex , destiny:failsafe ;
+    crm:P183i_starts_after_the_end_of destiny:sloane_decrypted_signal , destiny:cayde_departed_to_nessus ;
+    crm:P7_took_place_at destiny:nessus ;
+    destiny:clarifiedMotive [
+        a destiny:ClarifiedMotive ;
+        destiny:character destiny:guardians ;
+        destiny:hasMotive destiny:vanguard_team_reunion_necessity
     ] .
 
 destiny:guardians_gave_cayde_vex_teleporter a destiny:GameEvent ;
@@ -521,14 +586,14 @@ destiny:guardians_gave_cayde_vex_teleporter a destiny:GameEvent ;
         "Guardians gave Cayde the Vex teleporter and learned about Ikora's location on Io"@en ;
     rdfs:comment "Стражи передали Кейду телепортер вексов, который нужен ему для убийства Гоула. В ходе передачи Кейд рассказал Стражам о расположении Икоры на Ио."@ru, 
         "Guardians gave Cayde the Vex teleporter, which he needs to kill Ghaul. During the transfer, Cayde told the Guardians about Ikora's location on Io."@en ;
-    prov:wasAssociatedWith destiny:guardians , destiny:cayde ;
-    prov:wasInformedBy destiny:guardians_arrived_nessus_search_cayde ;
-    prov:atLocation destiny:nessus ;
-    prov:used destiny:vex_teleporter ;
-    prov:qualifiedAssociation [
-        a prov:Association ;
-        prov:agent destiny:cayde ;
-        prov:hadPlan destiny:kill_ghaul_with_vex_teleporter
+    crm:P11_had_participant destiny:guardians , destiny:cayde ;
+    crm:P183i_starts_after_the_end_of destiny:guardians_arrived_nessus_search_cayde ;
+    crm:P7_took_place_at destiny:nessus ;
+    crm:P16_used_specific_object destiny:vex_teleporter ;
+    destiny:clarifiedMotive [
+        a destiny:ClarifiedMotive ;
+        destiny:character destiny:cayde ;
+        destiny:hasMotive destiny:kill_ghaul_with_vex_teleporter
     ] .
 
 destiny:guardians_arrived_at_farm a destiny:GameEvent ;
@@ -536,13 +601,13 @@ destiny:guardians_arrived_at_farm a destiny:GameEvent ;
         "Guardians arrived at the Farm"@en ;
     rdfs:comment "Стражи, лишенные Света, прибыли на Ферму в поисках убежища и союзников."@ru, 
         "Guardians, stripped of their Light, arrived at the Farm seeking refuge and allies."@en ;
-    prov:wasAssociatedWith destiny:guardians , destiny:hawthorne ;
-    prov:wasInformedBy destiny:ghaul_attacked_last_city ;
-    prov:atLocation destiny:the_farm ;
-    prov:qualifiedAssociation [
-        a prov:Association ;
-        prov:agent destiny:guardians ;
-        prov:hadPlan destiny:survival_motive
+    crm:P11_had_participant destiny:guardians , destiny:hawthorne ;
+    crm:P183i_starts_after_the_end_of destiny:ghaul_attacked_last_city ;
+    crm:P7_took_place_at destiny:the_farm ;
+    destiny:clarifiedMotive [
+        a destiny:ClarifiedMotive ;
+        destiny:character destiny:guardians ;
+        destiny:hasMotive destiny:survival_motive
     ] .
 
 destiny:guardians_restored_light a destiny:GameEvent ;
@@ -550,14 +615,14 @@ destiny:guardians_restored_light a destiny:GameEvent ;
         "Guardians restored their Light"@en ;
     rdfs:comment "Стражи восстановили свой Свет через осколок Странника в Европейской мертвой зоне."@ru, 
         "Guardians restored their Light through a shard of the Traveler in the European Dead Zone."@en ;
-    prov:wasAssociatedWith destiny:guardians ;
-    prov:wasInformedBy destiny:guardians_arrived_at_farm ;
-    prov:atLocation destiny:european_dead_zone ;
-    prov:used destiny:traveler_shard ;
-    prov:qualifiedAssociation [
-        a prov:Association ;
-        prov:agent destiny:guardians ;
-        prov:hadPlan destiny:regain_light_power
+    crm:P11_had_participant destiny:guardians ;
+    crm:P183i_starts_after_the_end_of destiny:guardians_arrived_at_farm ;
+    crm:P7_took_place_at destiny:european_dead_zone ;
+    crm:P16_used_specific_object destiny:traveler_shard ;
+    destiny:clarifiedMotive [
+        a destiny:ClarifiedMotive ;
+        destiny:character destiny:guardians ;
+        destiny:hasMotive destiny:regain_light_power
     ] .
 
 destiny:edz_communication_network_was_setup a destiny:GameEvent ;
@@ -565,13 +630,13 @@ destiny:edz_communication_network_was_setup a destiny:GameEvent ;
         "Hawthorne and Devrim set up communication network in EDZ"@en ;
     rdfs:comment "Хоторн и Деврим вместе со Стражами установили коммуникационную сеть в Европейской мертвой зоне, включая ретрансляторы и сигнальные бустеры."@ru, 
         "Hawthorne and Devrim, together with Guardians, set up a communication network in the European Dead Zone, including relays and signal boosters."@en ;
-    prov:wasAssociatedWith destiny:hawthorne , destiny:devrim_kay , destiny:guardians ;
-    prov:wasInformedBy destiny:guardians_restored_light ;
-    prov:atLocation destiny:european_dead_zone ;
-    prov:qualifiedAssociation [
-        a prov:Association ;
-        prov:agent destiny:hawthorne ;
-        prov:hadPlan destiny:show_refugees_way_to_farm
+    crm:P11_had_participant destiny:hawthorne , destiny:devrim_kay , destiny:guardians ;
+    crm:P183i_starts_after_the_end_of destiny:guardians_restored_light ;
+    crm:P7_took_place_at destiny:european_dead_zone ;
+    destiny:clarifiedMotive [
+        a destiny:ClarifiedMotive ;
+        destiny:character destiny:hawthorne ;
+        destiny:hasMotive destiny:show_refugees_way_to_farm
     ] .
 
 # Сущности
@@ -582,29 +647,28 @@ destiny:ghaul a destiny:Character ;
         "Ghaul"@en ;
     rdfs:comment "Командующий Красным легионом Кабал, бывший гладиатор-альбинос с уродством из внешних пустошей, стремившийся украсть силу Странника."@ru, 
         "Commander of the Cabal Red Legion, former disfigured albino gladiator from the outer wastes, who sought to steal the Traveler's power."@en ;
-    prov:actedOnBehalfOf destiny:red_legion ;
-    prov:wasInvalidatedBy destiny:traveler_awakened_destroyed_ghaul_and_attracted_pyramids .
+    crm:P107i_is_current_or_former_member_of destiny:red_legion .
 
 destiny:red_legion a destiny:Organization ;
     rdfs:label "Красный легион"@ru, 
         "Red Legion"@en ;
     rdfs:comment "Элитное подразделение армии Кабал под командованием Гоула."@ru, 
         "Elite unit of the Cabal army under Ghaul's command."@en ;
-    prov:actedOnBehalfOf destiny:cabal .
+    crm:P107i_is_current_or_former_member_of destiny:cabal .
 
 destiny:guardians a destiny:Organization ;
     rdfs:label "Стражи"@ru, 
         "Guardians"@en ;
     rdfs:comment "Защитники человечества, обладающие силой Света."@ru, 
         "Protectors of humanity who wield the power of Light."@en ;
-    prov:actedOnBehalfOf destiny:vanguard .
+    crm:P107i_is_current_or_former_member_of destiny:vanguard .
 
 destiny:last_city a destiny:Location ;
     rdfs:label "Последний город"@ru, 
         "Last City"@en ;
     rdfs:comment "Последнее убежище человечества под защитой Странника."@ru, 
         "Humanity's last refuge under the Traveler's protection."@en ;
-    prov:atLocation destiny:earth .
+    crm:P7_took_place_at destiny:earth .
 
 destiny:light_suppression_device a destiny:Object ;
     rdfs:label "Устройство подавления Света"@ru, 
@@ -612,7 +676,7 @@ destiny:light_suppression_device a destiny:Object ;
     rdfs:comment "Технология Кабал, способная лишить Стражей их силы Света."@ru, 
         "Cabal technology capable of stripping Guardians of their Light power."@en .
 
-destiny:traveler a destiny:Object ;
+destiny:traveler a destiny:Character ;
     rdfs:label "Странник"@ru, 
         "The Traveler"@en ;
     rdfs:comment "Загадочная сферическая сущность, принесшая процветание человечеству и источник силы Света."@ru, 
@@ -647,7 +711,7 @@ destiny:the_farm a destiny:Location ;
         "The Farm"@en ;
     rdfs:comment "Убежище сопротивления на Земле, где Стражи нашли приют после потери Света."@ru, 
         "Resistance refuge on Earth where Guardians found shelter after losing their Light."@en ;
-    prov:atLocation destiny:earth .
+    crm:P7_took_place_at destiny:earth .
 
 destiny:hawthorne a destiny:Character ;
     rdfs:label "Хоторн"@ru, 
@@ -666,7 +730,7 @@ destiny:zavala a destiny:Character ;
         "Zavala"@en ;
     rdfs:comment "Командующий Авангарда Стражей."@ru, 
         "Commander of the Vanguard Guardians."@en ;
-    prov:actedOnBehalfOf destiny:vanguard .
+    crm:P107i_is_current_or_former_member_of destiny:vanguard .
 
 destiny:sloane a destiny:Character ;
     rdfs:label "Слоун"@ru, 
@@ -685,22 +749,21 @@ destiny:european_dead_zone a destiny:Location ;
         "European Dead Zone"@en ;
     rdfs:comment "Зараженная зона на Земле, где находится осколок Странника."@ru, 
         "Contaminated zone on Earth where a shard of the Traveler is located."@en ;
-    prov:atLocation destiny:earth .
+    crm:P7_took_place_at destiny:earth .
 
 destiny:traveler_shard a destiny:Object ;
     rdfs:label "Осколок Странника"@ru, 
         "Traveler Shard"@en ;
     rdfs:comment "Фрагмент Странника, появившийся после Коллапса, еще содержащий силу Света."@ru, 
         "Fragment of the Traveler that appeared after the Collapse, still containing Light power."@en ;
-    prov:atLocation destiny:european_dead_zone ;
-    prov:wasGeneratedBy destiny:traveler_shard_loss .
+    crm:P7_took_place_at destiny:european_dead_zone .
 
 destiny:arcology a destiny:Location ;
     rdfs:label "Аркология"@ru, 
         "Arcology"@en ;
     rdfs:comment "Глубокие руины города на Титане, где находятся древние технологии."@ru, 
         "Deep ruins of a city on Titan where ancient technology can be found."@en ;
-    prov:atLocation destiny:titan .
+    crm:P7_took_place_at destiny:titan .
 
 destiny:decryption_cpu a destiny:Object ;
     rdfs:label "Процессор дешифровки"@ru, 
@@ -719,14 +782,14 @@ destiny:ikora a destiny:Character ;
         "Ikora"@en ;
     rdfs:comment "Командующий Авангарда Стражей, специалист по Пустоте."@ru, 
         "Vanguard Commander, Void specialist."@en ;
-    prov:actedOnBehalfOf destiny:vanguard .
+    crm:P107i_is_current_or_former_member_of destiny:vanguard .
 
 destiny:cayde a destiny:Character ;
     rdfs:label "Кейд-6"@ru, 
         "Cayde-6"@en ;
     rdfs:comment "Командующий Авангарда Стражей, Охотник."@ru, 
         "Vanguard Commander, Hunter."@en ;
-    prov:actedOnBehalfOf destiny:vanguard .
+    crm:P107i_is_current_or_former_member_of destiny:vanguard .
 
 destiny:vanguard a destiny:Organization ;
     rdfs:label "Авангард"@ru, 
@@ -739,14 +802,14 @@ destiny:nessus a destiny:Location ;
         "Nessus"@en ;
     rdfs:comment "Центавр в Солнечной системе, превращенный в процветающий лес технологиями вексов."@ru, 
         "Centaur in the Solar System transformed into a thriving forest by Vex technology."@en ;
-    prov:atLocation destiny:solar_system .
+    crm:P7_took_place_at destiny:solar_system .
 
 destiny:io a destiny:Location ;
     rdfs:label "Ио"@ru, 
         "Io"@en ;
     rdfs:comment "Спутник Юпитера."@ru, 
         "Jupiter's moon."@en ;
-    prov:atLocation destiny:solar_system .
+    crm:P7_took_place_at destiny:solar_system .
 
 destiny:vex a destiny:Organization ;
     rdfs:label "Вексы"@ru, 
@@ -754,12 +817,12 @@ destiny:vex a destiny:Organization ;
     rdfs:comment "Машинная раса, стремящаяся к преобразованию вселенной в свою технологическую парадигму."@ru, 
         "Machine race seeking to transform the universe into their technological paradigm."@en .
 
-destiny:failsafe a destiny:Object ;
+destiny:failsafe a destiny:Character ;
     rdfs:label "Нейроматрица"@ru, 
         "Failsafe"@en ;
     rdfs:comment "Искусственный интеллект корабля Черный Исход, застрявший на Нессе."@ru, 
         "Artificial intelligence of the Exodus Black ship, stranded on Nessus."@en ;
-    prov:atLocation destiny:nessus .
+    crm:P7_took_place_at destiny:nessus .
 
 destiny:vex_teleporter a destiny:Object ;
     rdfs:label "Телепортер вексов"@ru, 
@@ -790,7 +853,7 @@ destiny:amanda_holliday a destiny:Character ;
         "Amanda Holliday"@en ;
     rdfs:comment "Главный механик и пилот Авангарда."@ru, 
         "Chief shipwright and pilot of the Vanguard."@en ;
-    prov:actedOnBehalfOf destiny:vanguard .
+    crm:P107i_is_current_or_former_member_of destiny:vanguard .
 
 destiny:thumos_key_codes a destiny:Object ;
     rdfs:label "Ключи доступа Тумоса"@ru, 
@@ -809,16 +872,14 @@ destiny:thumos_unbroken a destiny:Character ;
         "Thumos the Unbroken"@en ;
     rdfs:comment "Кабал-командир Красного легиона, обладает доступом к Всемогущему."@ru, 
         "Cabal commander of the Red Legion, has access to the Almighty."@en ;
-    prov:wasInvalidatedBy destiny:guardians_captured_thumos_ship_keys_for_almighty_approach ;
-    prov:actedOnBehalfOf destiny:red_legion .
+    crm:P107i_is_current_or_former_member_of destiny:red_legion .
 
 destiny:consul a destiny:Character ;
     rdfs:label "Консул"@ru, 
         "The Consul"@en ;
     rdfs:comment "Советник и наставник Гоула в Красном легионе, бывший политический противник Калуса."@ru, 
         "Advisor and mentor to Ghaul in the Red Legion, former political opponent of Calus."@en ;
-    prov:actedOnBehalfOf destiny:red_legion ;
-    prov:wasInvalidatedBy destiny:consul_and_speaker_were_killed .
+    crm:P107i_is_current_or_former_member_of destiny:red_legion .
 
 
 destiny:the_immortal a destiny:Object , destiny:Location ;
@@ -839,73 +900,73 @@ destiny:pyramids a destiny:Organization ;
 # Общие мотивы
 # General motives
 
-destiny:revenge_motive a destiny:GeneralMotive ;
+destiny:revenge_motive a destiny:MotiveGeneral ;
     rdfs:label "Мотив мести"@ru, 
         "Revenge motive"@en ;
     rdfs:comment "Общий мотив мести за причиненный вред или потери."@ru, 
         "General motive of revenge for harm done or losses suffered."@en .
 
-destiny:safety_motive a destiny:GeneralMotive ;
+destiny:safety_motive a destiny:MotiveGeneral ;
     rdfs:label "Мотив безопасности"@ru, 
         "Safety motive"@en ;
     rdfs:comment "Общий мотив обеспечения безопасности и защиты."@ru, 
         "General motive of ensuring safety and protection."@en .
 
-destiny:protection_motive a destiny:GeneralMotive ;
+destiny:protection_motive a destiny:MotiveGeneral ;
     rdfs:label "Мотив защиты"@ru, 
         "Protection motive"@en ;
     rdfs:comment "Общий мотив защиты других от угроз."@ru, 
         "General motive of protecting others from threats."@en .
 
-destiny:power_motive a destiny:GeneralMotive ;
+destiny:power_motive a destiny:MotiveGeneral ;
     rdfs:label "Мотив власти"@ru, 
         "Power motive"@en ;
     rdfs:comment "Общий мотив получения и использования власти."@ru, 
         "General motive of obtaining and using power."@en .
 
-destiny:conquest_motive a destiny:GeneralMotive ;
+destiny:conquest_motive a destiny:MotiveGeneral ;
     rdfs:label "Мотив завоевания"@ru, 
         "Conquest motive"@en ;
     rdfs:comment "Общий мотив завоевания и контроля."@ru, 
         "General motive of conquest and control."@en .
 
-destiny:survival_motive a destiny:GeneralMotive ;
+destiny:survival_motive a destiny:MotiveGeneral ;
     rdfs:label "Мотив выживания"@ru, 
         "Survival motive"@en ;
     rdfs:comment "Общий мотив выживания в опасных условиях."@ru, 
         "General motive of survival in dangerous conditions."@en .
 
-destiny:knowledge_motive a destiny:GeneralMotive ;
+destiny:knowledge_motive a destiny:MotiveGeneral ;
     rdfs:label "Мотив знаний"@ru, 
         "Knowledge motive"@en ;
     rdfs:comment "Общий мотив получения знаний и понимания."@ru, 
         "General motive of obtaining knowledge and understanding."@en .
 
-destiny:transformation_motive a destiny:GeneralMotive ;
+destiny:transformation_motive a destiny:MotiveGeneral ;
     rdfs:label "Мотив трансформации"@ru, 
         "Transformation motive"@en ;
     rdfs:comment "Общий мотив изменения себя или других."@ru, 
         "General motive of changing oneself or others."@en .
 
-destiny:elimination_motive a destiny:GeneralMotive ;
+destiny:elimination_motive a destiny:MotiveGeneral ;
     rdfs:label "Мотив устранения"@ru, 
         "Elimination motive"@en ;
     rdfs:comment "Общий мотив устранения препятствий или угроз."@ru, 
         "General motive of eliminating obstacles or threats."@en .
 
-destiny:liberation_motive a destiny:GeneralMotive ;
+destiny:liberation_motive a destiny:MotiveGeneral ;
     rdfs:label "Мотив освобождения"@ru, 
         "Liberation motive"@en ;
     rdfs:comment "Общий мотив освобождения от контроля или угнетения."@ru, 
         "General motive of liberation from control or oppression."@en .
 
-destiny:competition_motive a destiny:GeneralMotive ;
+destiny:competition_motive a destiny:MotiveGeneral ;
     rdfs:label "Мотив соперничества"@ru, 
         "Competition motive"@en ;
     rdfs:comment "Общий мотив соревнования, испытания сил и демонстрации превосходства."@ru, 
         "General motive of competition, testing strength and demonstrating superiority."@en .
 
-destiny:submission_motive a destiny:GeneralMotive ;
+destiny:submission_motive a destiny:MotiveGeneral ;
     rdfs:label "Мотив подчинения"@ru, 
         "Submission motive"@en ;
     rdfs:comment "Общий мотив подчинения воле другого или внешним обстоятельствам."@ru, 
@@ -914,208 +975,202 @@ destiny:submission_motive a destiny:GeneralMotive ;
 # Конкретные планы с группировкой
 # Specific plans with grouping
 
-destiny:conquer_traveler_light a prov:Plan ;
+destiny:conquer_traveler_light a destiny:MotiveSpecific ;
     rdfs:label "Завоевать силу Света Странника"@ru, 
         "Conquer the Traveler's Light power"@en ;
     rdfs:comment "Захватить силу Странника и использовать её для завоевания вселенной."@ru, 
         "Capture the Traveler's power and use it to conquer the universe."@en ;
-    prov:specializationOf destiny:power_motive , destiny:conquest_motive .
+    destiny:specializationOf destiny:power_motive , destiny:conquest_motive .
 
 
-destiny:regain_light_power a prov:Plan ;
+destiny:regain_light_power a destiny:MotiveSpecific ;
     rdfs:label "Восстановить силу Света"@ru, 
         "Regain Light power"@en ;
     rdfs:comment "Восстановить свою силу Света."@ru, 
         "Restore Light power."@en ;
-    prov:specializationOf destiny:power_motive , destiny:survival_motive .
+    destiny:specializationOf destiny:power_motive , destiny:survival_motive .
 
-destiny:show_refugees_way_to_farm a prov:Plan ;
+destiny:show_refugees_way_to_farm a destiny:MotiveSpecific ;
     rdfs:label "Показать беженцам путь к Ферме"@ru, 
         "Show refugees the way to the Farm"@en ;
     rdfs:comment "Показать беженцам путь к Ферме в Европейской мертвой зоне."@ru, 
         "Show refugees the way to the Farm in the European Dead Zone."@en ;
-    prov:specializationOf destiny:protection_motive .
+    destiny:specializationOf destiny:protection_motive .
 
-destiny:gather_forces_on_titan a prov:Plan ;
+destiny:gather_forces_on_titan a destiny:MotiveSpecific ;
     rdfs:label "Собрать силы на Титане"@ru, 
         "Gather forces on Titan"@en ;
     rdfs:comment "Собрать силы и найти убежище на Титане после падения Последнего города."@ru, 
         "Gather forces and find refuge on Titan after the fall of the Last City."@en ;
-    prov:specializationOf destiny:survival_motive .
+    destiny:specializationOf destiny:survival_motive .
 
-destiny:rally_guardians_on_titan a prov:Plan ;
+destiny:rally_guardians_on_titan a destiny:MotiveSpecific ;
     rdfs:label "Собрать Стражей на Титане"@ru, 
         "Rally Guardians on Titan"@en ;
     rdfs:comment "Собрать всех Стражей на Титане для подготовки к контрнаступлению."@ru, 
         "Rally all Guardians on Titan to prepare for a counteroffensive."@en ;
-    prov:specializationOf destiny:protection_motive .
+    destiny:specializationOf destiny:protection_motive .
 
-destiny:reactivate_rig_command_systems a prov:Plan ;
+destiny:reactivate_rig_command_systems a destiny:MotiveSpecific ;
     rdfs:label "Реактивировать командные системы Рига"@ru, 
         "Reactivate Rig command systems"@en ;
     rdfs:comment "Очистить волновые энергетические конвертеры для реактивации командных систем на Риге, чтобы наращивать силы сопротивления."@ru, 
         "Clear wave energy converters to reactivate command systems on the Rig to increase resistance forces."@en ;
-    prov:specializationOf destiny:protection_motive .
+    destiny:specializationOf destiny:protection_motive .
 
-destiny:decrypt_cabal_communication a prov:Plan ;
+destiny:decrypt_cabal_communication a destiny:MotiveSpecific ;
     rdfs:label "Расшифровать коммуникацию Кабал"@ru, 
         "Decrypt Cabal communication"@en ;
     rdfs:comment "Получить систему дешифровки для расшифровки перехваченного сообщения Кабал."@ru, 
         "Retrieve decryption system to decrypt the intercepted Cabal message."@en ;
-    prov:specializationOf destiny:knowledge_motive .
+    destiny:specializationOf destiny:knowledge_motive .
 
-destiny:learn_ghaul_plan a prov:Plan ;
+destiny:learn_ghaul_plan a destiny:MotiveSpecific ;
     rdfs:label "Узнать план Гоула"@ru, 
         "Learn Ghaul's plan"@en ;
     rdfs:comment "Расшифровать сообщение Кабал, чтобы узнать о планах Гоула."@ru, 
         "Decrypt the Cabal message to learn about Ghaul's plans."@en ;
-    prov:specializationOf destiny:knowledge_motive .
+    destiny:specializationOf destiny:knowledge_motive .
 
-destiny:vanguard_team_reunion_necessity a prov:Plan ;
+destiny:vanguard_team_reunion_necessity a destiny:MotiveSpecific ;
     rdfs:label "Необходимость воссоединения команды Авангарда"@ru, 
         "Necessity of Vanguard team reunion"@en ;
     rdfs:comment "Узнав о плане Гоула использовать Всемогущий для уничтожения Солнца, понимается необходимость воссоединения с командой Авангарда для противостояния угрозе."@ru, 
         "Learning of Ghaul's plan to use the Almighty to destroy the Sun, the need to reunite with the Vanguard team to counter the threat is understood."@en ;
-    prov:specializationOf destiny:protection_motive ;
-    prov:wasGeneratedBy destiny:sloane_decrypted_signal .
+    destiny:specializationOf destiny:protection_motive .
 
-destiny:threaten_solar_system_destruction a prov:Plan ;
+destiny:threaten_solar_system_destruction a destiny:MotiveSpecific ;
     rdfs:label "Угроза уничтожения Солнечной системы"@ru, 
         "Threaten Solar System destruction"@en ;
     rdfs:comment "Использовать Всемогущий для уничтожения Солнца, если Странник не поддастся требованиям."@ru, 
         "Use the Almighty to destroy the Sun if the Traveler does not submit to demands."@en ;
-    prov:specializationOf destiny:power_motive , destiny:conquest_motive .
+    destiny:specializationOf destiny:power_motive , destiny:conquest_motive .
 
-destiny:kill_ghaul_with_vex_teleporter a prov:Plan ;
+destiny:kill_ghaul_with_vex_teleporter a destiny:MotiveSpecific ;
     rdfs:label "Убить Гоула с помощью телепортера вексов"@ru, 
         "Kill Ghaul with Vex teleporter"@en ;
     rdfs:comment "Использовать телепортер вексов для убийства Гоула."@ru, 
         "Use the Vex teleporter to kill Ghaul."@en ;
-    prov:specializationOf destiny:elimination_motive .
+    destiny:specializationOf destiny:elimination_motive .
 
-destiny:seek_traveler_answers_on_io a prov:Plan ;
+destiny:seek_traveler_answers_on_io a destiny:MotiveSpecific ;
     rdfs:label "Искать ответы Странника на Ио"@ru, 
         "Seek Traveler's answers on Io"@en ;
     rdfs:comment "Найти ответы на Ио, последнем месте, где был Странник."@ru, 
         "Find answers on Io, the last place the Traveler touched."@en ;
-    prov:specializationOf destiny:knowledge_motive .
+    destiny:specializationOf destiny:knowledge_motive .
 
-destiny:complete_vanguard_reunion a prov:Plan ;
+destiny:complete_vanguard_reunion a destiny:MotiveSpecific ;
     rdfs:label "Завершить воссоединение Авангарда"@ru, 
         "Complete Vanguard reunion"@en ;
     rdfs:comment "Воссоединиться с Икорой на Ио для завершения команды Авангарда."@ru, 
         "Reunite with Ikora on Io to complete the Vanguard team."@en ;
-    prov:specializationOf destiny:protection_motive .
+    destiny:specializationOf destiny:protection_motive .
 
-destiny:transform_legion_with_light a prov:Plan ;
+destiny:transform_legion_with_light a destiny:MotiveSpecific ;
     rdfs:label "Трансформировать легион с помощью Света"@ru, 
         "Transform Legion with Light"@en ;
     rdfs:comment "Трансформировать Красный легион в носителей Света, используя энергию Странника."@ru, 
         "Transform the Red Legion into wielders of Light using the Traveler's energy."@en ;
-    prov:specializationOf destiny:transformation_motive , destiny:power_motive .
+    destiny:specializationOf destiny:transformation_motive , destiny:power_motive .
 
-destiny:consume_light_on_io a prov:Plan ;
+destiny:consume_light_on_io a destiny:MotiveSpecific ;
     rdfs:label "Поглотить энергию Ио"@ru, 
         "Consume Io energy"@en ;
     rdfs:comment "Поглотить энергию Странника на Ио."@ru, 
         "Consume the Traveler's energy on Io."@en ;
-    prov:specializationOf destiny:power_motive .
+    destiny:specializationOf destiny:power_motive .
 
-destiny:prevent_io_implosion a prov:Plan ;
+destiny:prevent_io_implosion a destiny:MotiveSpecific ;
     rdfs:label "Предотвратить взрыв Ио"@ru, 
         "Prevent Io implosion"@en ;
     rdfs:comment "Предотвратить взрыв Ио от истощения энергии Одержимыми."@ru, 
         "Prevent Io from imploding due to energy depletion by the Taken."@en ;
-    prov:specializationOf destiny:protection_motive ;
-    prov:wasGeneratedBy destiny:taken_invaded_io .
+    destiny:specializationOf destiny:protection_motive .
 
-destiny:discredit_zavala_plan a prov:Plan ;
+destiny:discredit_zavala_plan a destiny:MotiveSpecific ;
     rdfs:label "Дискредитировать план Завалы"@ru, 
         "Discredit Zavala's plan"@en ;
     rdfs:comment "Дискредитировать план атаковать Всемогущий, используя данные Военного Разума."@ru, 
         "Discredit the plan to attack the Almighty using Warmind data."@en ;
-    prov:specializationOf destiny:elimination_motive .
+    destiny:specializationOf destiny:elimination_motive .
 
-destiny:attack_almighty_with_warmind_data a prov:Plan ;
+destiny:attack_almighty_with_warmind_data a destiny:MotiveSpecific ;
     rdfs:label "Атаковать Всемогущий с помощью данных Военного Разума"@ru, 
         "Attack the Almighty with Warmind data"@en ;
     rdfs:comment "Использовать данные сканирования Военного Разума для атаки на Всемогущий и его уничтожения."@ru, 
         "Use Warmind scan data to attack and destroy the Almighty."@en ;
-    prov:specializationOf destiny:elimination_motive ;
-    prov:wasGeneratedBy destiny:sloane_decrypted_signal .
+    destiny:specializationOf destiny:elimination_motive .
 
-destiny:help_guardians_infiltrate_city a prov:Plan ;
+destiny:help_guardians_infiltrate_city a destiny:MotiveSpecific ;
     rdfs:label "Помочь Стражам проникнуть в город"@ru, 
         "Help Guardians infiltrate the city"@en ;
     rdfs:comment "Помочь Стражам незаметно проникнуть в город, используя знания о стенах и навыки скрытного проникновения."@ru, 
         "Help Guardians infiltrate the city unnoticed using knowledge of city walls and stealth infiltration skills."@en ;
-    prov:specializationOf destiny:liberation_motive .
+    destiny:specializationOf destiny:liberation_motive .
 
-destiny:disable_almighty_instead_of_destroy a prov:Plan ;
+destiny:disable_almighty_instead_of_destroy a destiny:MotiveSpecific ;
     rdfs:label "Отключить Всемогущий вместо уничтожения"@ru, 
         "Disable the Almighty instead of destroying"@en ;
     rdfs:comment "Отключить Всемогущий вместо его уничтожения, чтобы избежать цепной реакции и суперновы Солнца."@ru, 
         "Disable the Almighty instead of destroying it to avoid chain reaction and solar supernova."@en ;
-    prov:specializationOf destiny:protection_motive .
+    destiny:specializationOf destiny:protection_motive .
 
-destiny:free_occupied_city a prov:Plan ;
+destiny:free_occupied_city a destiny:MotiveSpecific ;
     rdfs:label "Освободить оккупированный Город"@ru, 
         "Free the occupied City"@en ;
     rdfs:comment "Освободить оккупированный город от Красного легиона и восстановить контроль над Последним городом."@ru, 
         "Free the occupied city from the Red Legion and restore control over the Last City."@en ;
-    prov:specializationOf destiny:liberation_motive .
+    destiny:specializationOf destiny:liberation_motive .
 
-destiny:provide_tank_and_air_support a prov:Plan ;
+destiny:provide_tank_and_air_support a destiny:MotiveSpecific ;
     rdfs:label "Обеспечить поддержку танками и воздушную поддержку"@ru, 
         "Provide tank and air support"@en ;
     rdfs:comment "Обеспечить Стражам поддержку танками и воздушную поддержку во время миссии против Тумоса."@ru, 
         "Provide Guardians with tank support and air support during the mission against Thumos."@en ;
-    prov:specializationOf destiny:protection_motive .
+    destiny:specializationOf destiny:protection_motive .
 
-destiny:revenge_for_killed_team a prov:Plan ;
+destiny:revenge_for_killed_team a destiny:MotiveSpecific ;
     rdfs:label "Отомстить за убитую команду"@ru, 
         "Revenge for killed team"@en ;
     rdfs:comment "Отомстить за команду, которую убил Тумос Несломленный."@ru, 
         "Revenge for the team that was killed by Thumos the Unbroken."@en ;
-    prov:specializationOf destiny:revenge_motive .
+    destiny:specializationOf destiny:revenge_motive .
 
-destiny:protect_humanity_from_ghaul a prov:Plan ;
+destiny:protect_humanity_from_ghaul a destiny:MotiveSpecific ;
     rdfs:label "Защитить человечество от Гоула"@ru, 
         "Protect humanity from Ghaul"@en ;
     rdfs:comment "Защитить человечество от угрозы Гоула, пробудившись от сна."@ru, 
         "Protect humanity from Ghaul's threat by awakening from slumber."@en ;
-    prov:specializationOf destiny:protection_motive .
+    destiny:specializationOf destiny:protection_motive .
 
-destiny:free_traveler_and_occupied_city a prov:Plan ;
+destiny:free_traveler_and_occupied_city a destiny:MotiveSpecific ;
     rdfs:label "Освободить Странника и оккупированный Последний Город"@ru, 
         "Free the Traveler and occupied Last City"@en ;
     rdfs:comment "Освободить Странника от клетки и оккупированный город от Красного легиона."@ru, 
         "Free the Traveler from its cage and the occupied city from the Red Legion."@en ;
-    prov:specializationOf destiny:liberation_motive .
+    destiny:specializationOf destiny:liberation_motive .
 
-destiny:force_ghaul_to_take_light a prov:Plan ;
+destiny:force_ghaul_to_take_light a destiny:MotiveSpecific ;
     rdfs:label "Заставить Гоула взять Свет силой"@ru, 
         "Force Ghaul to take Light by force"@en ;
     rdfs:comment "Заставить Гоула взять силу Света силой, не дожидаясь одобрения Странника."@ru, 
         "Force Ghaul to take the Light by force, not waiting for the Traveler's approval."@en ;
-    prov:specializationOf destiny:power_motive .
+    destiny:specializationOf destiny:power_motive .
 
-destiny:eliminate_disobedient_advisor a prov:Plan ;
+destiny:eliminate_disobedient_advisor a destiny:MotiveSpecific ;
     rdfs:label "Устранить непокорного советника"@ru, 
         "Eliminate disobedient advisor"@en ;
     rdfs:comment "Устранить советника, который осмелился критиковать и приказывать."@ru, 
         "Eliminate an advisor who dared to criticize and give orders."@en ;
-    prov:specializationOf destiny:elimination_motive .
-
-# Персонажи из истории Эрианы-3
-# Characters from Eriana-3's story
+    destiny:specializationOf destiny:elimination_motive .
 
 destiny:eriana_3 a destiny:Character ;
     rdfs:label "Эриана-3"@ru, 
         "Eriana-3"@en ;
     rdfs:comment "Страж, член первой команды против Кроты."@ru, 
         "Guardian, member of the first fireteam against Crota."@en ;
-    prov:actedOnBehalfOf destiny:guardians ;
+    crm:P107i_is_current_or_former_member_of destiny:guardians ;
     destiny:hasRomanticRelationship destiny:wei_ning .
 
 destiny:wei_ning a destiny:Character ;
@@ -1123,22 +1178,21 @@ destiny:wei_ning a destiny:Character ;
         "Wei Ning"@en ;
     rdfs:comment "Страж, член первой команды против Кроты, погибла в битве против Кроты."@ru, 
         "Guardian, member of the first fireteam against Crota, died in battle against Crota."@en ;
-    prov:actedOnBehalfOf destiny:guardians ;
-    prov:wasInvalidatedBy destiny:crota_battle .
+    crm:P107i_is_current_or_former_member_of destiny:guardians .
 
 destiny:pahanin a destiny:Character ;
     rdfs:label "Паханин"@ru, 
         "Pahanin"@en ;
     rdfs:comment "Страж, член первой команды против Кроты, представил Эриану-3 и Вей Нинг."@ru, 
         "Guardian, member of the first fireteam against Crota, introduced Eriana-3 and Wei Ning."@en ;
-    prov:actedOnBehalfOf destiny:guardians .
+    crm:P107i_is_current_or_former_member_of destiny:guardians .
 
 destiny:crota a destiny:Character ;
     rdfs:label "Крота"@ru, 
         "Crota"@en ;
     rdfs:comment "Сын Орикса, принц Улья, убивший первую команду Стражей на Луне."@ru, 
         "Son of Oryx, Hive prince who killed the first Guardian fireteam on the Moon."@en ;
-    prov:actedOnBehalfOf destiny:hive .
+    crm:P107i_is_current_or_former_member_of destiny:hive .
 
 # События из истории Эрианы-3
 # Events from Eriana-3's story
@@ -1148,12 +1202,12 @@ destiny:eriana_wei_ning_meeting a destiny:GameEvent ;
         "First meeting of Eriana-3 and Wei Ning"@en ;
     rdfs:comment "Первая встреча Эрианы-3 и Вей Нинг в салуне Башни, организованная Паханином."@ru, 
         "First meeting of Eriana-3 and Wei Ning in the Tower saloon, arranged by Pahanin."@en ;
-    prov:wasAssociatedWith destiny:eriana_3 , destiny:wei_ning , destiny:pahanin ;
-    prov:atLocation destiny:tower ;
-    prov:qualifiedAssociation [
-        a prov:Association ;
-        prov:agent destiny:pahanin ;
-        prov:hadPlan destiny:introduce_eriana_wei_ning
+    crm:P11_had_participant destiny:eriana_3 , destiny:wei_ning , destiny:pahanin ;
+    crm:P7_took_place_at destiny:tower ;
+    destiny:clarifiedMotive [
+        a destiny:ClarifiedMotive ;
+        destiny:character destiny:pahanin ;
+        destiny:hasMotive destiny:introduce_eriana_wei_ning
     ] .
 
 destiny:crota_battle a destiny:GameEvent ;
@@ -1161,67 +1215,62 @@ destiny:crota_battle a destiny:GameEvent ;
         "Battle against Crota"@en ;
     rdfs:comment "Битва первой команды Стражей против Кроты в Адской пасти на Луне, где погибла Вей Нинг."@ru, 
         "Battle of the first Guardian fireteam against Crota in the Hellmouth on the Moon, where Wei Ning died."@en ;
-    prov:wasAssociatedWith destiny:eriana_3 , destiny:wei_ning , destiny:pahanin , destiny:crota ;
-    prov:wasInformedBy destiny:eriana_wei_ning_meeting ;
-    prov:atLocation destiny:luna .
+    crm:P11_had_participant destiny:eriana_3 , destiny:wei_ning , destiny:pahanin , destiny:crota ;
+    crm:P183i_starts_after_the_end_of destiny:eriana_wei_ning_meeting ;
+    crm:P9_consists_of [
+        a crm:E69_Death ;
+        crm:P100_was_death_of destiny:wei_ning
+    ] ;
+    crm:P7_took_place_at destiny:luna .
 
 destiny:eriana_vengeance_mission a destiny:GameEvent ;
     rdfs:label "Миссия мести Эрианы-3"@ru, 
         "Eriana-3's vengeance mission"@en ;
     rdfs:comment "Эриана-3 отправилась на Луну с новой командой из пяти Стражей для мести за смерть Вей Нинг."@ru, 
         "Eriana-3 departed to the Moon with a new team of five Guardians for vengeance for Wei Ning's death."@en ;
-    prov:wasAssociatedWith destiny:eriana_3 , destiny:guardians ;
-    prov:wasInformedBy destiny:crota_battle ;
-    prov:atLocation destiny:luna ;
-    prov:qualifiedAssociation [
-        a prov:Association ;
-        prov:agent destiny:eriana_3 ;
-        prov:hadPlan destiny:avenge_wei_ning
+    crm:P11_had_participant destiny:eriana_3 , destiny:guardians ;
+    crm:P183i_starts_after_the_end_of destiny:crota_battle ;
+    crm:P7_took_place_at destiny:luna ;
+    destiny:clarifiedMotive [
+        a destiny:ClarifiedMotive ;
+        destiny:character destiny:eriana_3 ;
+        destiny:hasMotive destiny:avenge_wei_ning
     ] .
-
-# Локации из истории Эрианы-3
-# Locations from Eriana-3's story
 
 destiny:luna a destiny:Location ;
     rdfs:label "Луна"@ru, 
         "Luna"@en ;
     rdfs:comment "Естественный спутник Земли, место битвы против Кроты."@ru, 
         "Earth's natural satellite, site of battle against Crota."@en ;
-    prov:atLocation destiny:solar_system .
+    crm:P7_took_place_at destiny:solar_system .
 
 destiny:tower a destiny:Location ;
     rdfs:label "Башня"@ru, 
         "The Tower"@en ;
     rdfs:comment "Командный центр Стражей в Последнем городе."@ru, 
         "Guardian command center in the Last City."@en ;
-    prov:atLocation destiny:last_city .
+    crm:P7_took_place_at destiny:last_city .
 
 destiny:hellmouth a destiny:Location ;
     rdfs:label "Адская пасть"@ru, 
         "Hellmouth"@en ;
     rdfs:comment "Кратер на Луне, где обитал Крота и где погибла Вей Нинг."@ru, 
         "Crater on the Moon where Crota resided and where Wei Ning died."@en ;
-    prov:atLocation destiny:luna .
+    crm:P7_took_place_at destiny:luna .
 
-# Планы из истории Эрианы-3
-# Plans from Eriana-3's story
-
-destiny:avenge_wei_ning a prov:Plan ;
+destiny:avenge_wei_ning a destiny:MotiveSpecific ;
     rdfs:label "Отомстить за Вей Нинг"@ru, 
         "Avenge Wei Ning"@en ;
     rdfs:comment "Отомстить за смерть Вей Нинг, убив Кроту."@ru, 
         "Avenge Wei Ning's death by killing Crota."@en ;
-    prov:specializationOf destiny:revenge_motive .
+    destiny:specializationOf destiny:revenge_motive .
 
-destiny:introduce_eriana_wei_ning a prov:Plan ;
+destiny:introduce_eriana_wei_ning a destiny:MotiveSpecific ;
     rdfs:label "Познакомить Эриану-3 и Вей Нинг"@ru, 
         "Introduce Eriana-3 and Wei Ning"@en ;
     rdfs:comment "Познакомить Эриану-3 и Вей Нинг в салуне Башни."@ru, 
         "Introduce Eriana-3 and Wei Ning in the Tower saloon."@en ;
-    prov:specializationOf destiny:knowledge_motive .
-
-# Организации из истории Эрианы-3
-# Organizations from Eriana-3's story
+    destiny:specializationOf destiny:knowledge_motive .
 
 destiny:hive a destiny:Organization ;
     rdfs:label "Улей"@ru, 
@@ -1229,16 +1278,12 @@ destiny:hive a destiny:Organization ;
     rdfs:comment "Древняя раса паразитов, стремящаяся к уничтожению всего живого."@ru, 
         "Ancient parasitic race seeking to destroy all life."@en .
 
-# Корабль Exodus Black и связанные события
-# Exodus Black ship and related events
-
-destiny:exodus_black a destiny:Object ;
+destiny:exodus_black a destiny:Character ;
     rdfs:label "Черный Исход"@ru, 
         "Exodus Black"@en ;
     rdfs:comment "Колонизационный корабль Корпорации Кловис Брей, застрявший на Нессе."@ru, 
         "Colonization ship of Clovis Bray Corporation, stranded on Nessus."@en ;
-    prov:atLocation destiny:nessus ;
-    prov:wasGeneratedBy destiny:clovis_bray_corporation .
+    crm:P7_took_place_at destiny:nessus .
 
 destiny:exodus_black_crew a destiny:Organization ;
     rdfs:label "Экипаж Черного Исхода"@ru, 
@@ -1246,57 +1291,48 @@ destiny:exodus_black_crew a destiny:Organization ;
     rdfs:comment "Экипаж колонизационного корабля Черный Исход."@ru, 
         "Crew of the colonization ship Exodus Black."@en .
 
-# События, связанные с Exodus Black
-# Events related to Exodus Black
-
 destiny:exodus_black_stranded_on_nessus a destiny:GameEvent ;
     rdfs:label "Черный Исход застрял на Нессе"@ru, 
         "Exodus Black stranded on Nessus"@en ;
     rdfs:comment "Корабль Черный Исход был захвачен гравитацией Несса и застрял на этом центавре. Несс неожиданно появился и сложил орбитальный импульс в шесть дополнительных измерений. Экипаж потерял чувство времени, прошлое и будущее стали как верх и низ, они получали собственные сигналы бедствия."@ru, 
         "The Exodus Black ship was captured by Nessus gravity and stranded on this centaur. Nessus unexpectedly appeared and folded orbital momentum into six extra dimensions. The crew lost all sense of time, past and future became like up and down, they were receiving their own distress calls."@en ;
-    prov:wasAssociatedWith destiny:exodus_black , destiny:exodus_black_crew , destiny:nessus , destiny:vex ;
-    prov:atLocation destiny:nessus ;
-    prov:qualifiedAssociation [
-        a prov:Association ;
-        prov:agent destiny:exodus_black_crew ;
-        prov:hadPlan destiny:survive_on_nessus
+    crm:P11_had_participant destiny:exodus_black , destiny:exodus_black_crew , destiny:vex ;
+    crm:P7_took_place_at destiny:nessus ;
+    destiny:clarifiedMotive [
+        a destiny:ClarifiedMotive ;
+        destiny:character destiny:exodus_black_crew ;
+        destiny:hasMotive destiny:survive_on_nessus
     ] , [
-        a prov:Association ;
-        prov:agent destiny:vex ;
-        prov:hadPlan destiny:study_human_consciousness
+        a destiny:ClarifiedMotive ;
+        destiny:character destiny:vex ;
+        destiny:hasMotive destiny:study_human_consciousness
     ] .
 
-# Планы, связанные с Exodus Black
-# Plans related to Exodus Black
-
-destiny:survive_on_nessus a prov:Plan ;
+destiny:survive_on_nessus a destiny:MotiveSpecific ;
     rdfs:label "Выжить на Нессе"@ru, 
         "Survive on Nessus"@en ;
     rdfs:comment "Выжить на Нессе после того, как корабль застрял на этом центавре."@ru, 
         "Survive on Nessus after the ship was stranded on this centaur."@en ;
-    prov:specializationOf destiny:survival_motive .
+    destiny:specializationOf destiny:survival_motive .
 
-destiny:study_human_consciousness a prov:Plan ;
+destiny:study_human_consciousness a destiny:MotiveSpecific ;
     rdfs:label "Изучить человеческое сознание"@ru, 
         "Study human consciousness"@en ;
     rdfs:comment "Изучить сознание членов экипажа Черного Исхода."@ru, 
         "Study the consciousness of Exodus Black crew members."@en ;
-    prov:specializationOf destiny:knowledge_motive .
-
-# Проект заселения космических объектов и освоение Титана
-# Space colonization project and Titan exploration
+    destiny:specializationOf destiny:knowledge_motive .
 
 destiny:space_colonization_project a destiny:GameEvent ;
     rdfs:label "Запущен проект заселения космических объектов"@ru, 
         "Space colonization project launched"@en ;
     rdfs:comment "Проект заселения космических объектов, на которых нет влияния Странника, для поиска свободы и тишины в межзвездном пространстве."@ru, 
         "Project to colonize space objects not influenced by the Traveler, seeking freedom and silence in interstellar space."@en ;
-    prov:wasAssociatedWith destiny:dr_shanice_pell ;
-    prov:atLocation destiny:solar_system ;
-    prov:qualifiedAssociation [
-        a prov:Association ;
-        prov:agent destiny:dr_shanice_pell ;
-        prov:hadPlan destiny:explore_interstellar_space
+    crm:P11_had_participant destiny:dr_shanice_pell ;
+    crm:P7_took_place_at destiny:solar_system ;
+    destiny:clarifiedMotive [
+        a destiny:ClarifiedMotive ;
+        destiny:character destiny:dr_shanice_pell ;
+        destiny:hasMotive destiny:explore_interstellar_space
     ] .
 
 destiny:titan_colonization a destiny:GameEvent ;
@@ -1304,17 +1340,14 @@ destiny:titan_colonization a destiny:GameEvent ;
         "Titan colonization"@en ;
     rdfs:comment "Освоение Титана как части проекта заселения космических объектов."@ru, 
         "Colonization of Titan as part of the space colonization project."@en ;
-    prov:wasAssociatedWith destiny:dr_shanice_pell , destiny:sloane ;
-    prov:wasInformedBy destiny:space_colonization_project ;
-    prov:atLocation destiny:titan ;
-    prov:qualifiedAssociation [
-        a prov:Association ;
-        prov:agent destiny:dr_shanice_pell , destiny:sloane ;
-        prov:hadPlan destiny:explore_interstellar_space
+    crm:P11_had_participant destiny:dr_shanice_pell , destiny:sloane ;
+    crm:P183i_starts_after_the_end_of destiny:space_colonization_project ;
+    crm:P7_took_place_at destiny:titan ;
+    destiny:clarifiedMotive [
+        a destiny:ClarifiedMotive ;
+        destiny:character destiny:dr_shanice_pell , destiny:sloane ;
+        destiny:hasMotive destiny:explore_interstellar_space
     ] .
-
-# Персонажи из проекта заселения космических объектов
-# Characters from space colonization project
 
 destiny:dr_shanice_pell a destiny:Character ;
     rdfs:label "Доктор Шанис Пелл"@ru, 
@@ -1322,26 +1355,20 @@ destiny:dr_shanice_pell a destiny:Character ;
     rdfs:comment "Ученый, ведущий дневник о проекте заселения космических объектов."@ru, 
         "Scientist keeping diaries about the space colonization project."@en .
 
-# Планы из проекта заселения космических объектов
-# Plans from space colonization project
-
-destiny:explore_interstellar_space a prov:Plan ;
+destiny:explore_interstellar_space a destiny:MotiveSpecific ;
     rdfs:label "Исследовать межзвездное пространство"@ru, 
         "Explore interstellar space"@en ;
     rdfs:comment "Исследовать межзвездное пространство для поиска ответов."@ru, 
         "Explore interstellar space to find answers."@en ;
-    prov:specializationOf destiny:knowledge_motive .
-
-# Катастрофа в MIDA на Марсе
-# MIDA disaster on Mars
+    destiny:specializationOf destiny:knowledge_motive .
 
 destiny:mida_disaster_on_mars a destiny:GameEvent ;
     rdfs:label "Катастрофа в MIDA на Марсе"@ru, 
         "MIDA disaster on Mars"@en ;
     rdfs:comment "Катастрофа в MIDA на Марсе, в результате которой выжил только один человек."@ru, 
         "Disaster in MIDA on Mars, as a result of which only one person survived."@en ;
-    prov:wasAssociatedWith destiny:mida_organization ;
-    prov:atLocation destiny:mars .
+    crm:P11_had_participant destiny:mida_organization ;
+    crm:P7_took_place_at destiny:mars .
 
 destiny:mida_organization a destiny:Organization ;
     rdfs:label "MIDA"@ru, 
@@ -1354,105 +1381,101 @@ destiny:mars a destiny:Location ;
         "Mars"@en ;
     rdfs:comment "Красная планета в Солнечной системе."@ru, 
         "Red planet in the Solar System."@en ;
-    prov:atLocation destiny:solar_system .
-
-# Миротворцы и их роль в Последнем городе
-# Peacekeepers and their role in the Last City
+    crm:P7_took_place_at destiny:solar_system .
 
 destiny:peacekeepers_order a destiny:Organization ;
     rdfs:label "Орден Миротворцев"@ru, 
         "Peacekeepers Order"@en ;
     rdfs:comment "Орден Стражей, патрулировавших Последний город и защищавших ядро общества."@ru, 
         "Order of Guardians who patrolled the Last City and protected the core of society."@en ;
-    prov:actedOnBehalfOf destiny:guardians ;
-    prov:wasInvalidatedBy destiny:red_legion_attack_on_last_city .
+    crm:P107i_is_current_or_former_member_of destiny:guardians .
 
 destiny:faction_wars a destiny:GameEvent ;
     rdfs:label "Войны фракций"@ru, 
         "Faction Wars"@en ;
     rdfs:comment "Войны между фракциями, которые показали ущерб от внутренних раздоров для хрупкого общества."@ru, 
         "Wars between factions that showed the damage internal strife could bring to a fragile society."@en ;
-    prov:wasAssociatedWith destiny:guardians , destiny:peacekeepers_order ;
-    prov:atLocation destiny:last_city ;
-    prov:qualifiedAssociation [
-        a prov:Association ;
-        prov:agent destiny:peacekeepers_order ;
-        prov:hadPlan destiny:protect_city_core
+    crm:P11_had_participant destiny:guardians , destiny:peacekeepers_order ;
+    crm:P7_took_place_at destiny:last_city ;
+    destiny:clarifiedMotive [
+        a destiny:ClarifiedMotive ;
+        destiny:character destiny:peacekeepers_order ;
+        destiny:hasMotive destiny:protect_city_core
     ] .
 
-destiny:protect_city_core a prov:Plan ;
+destiny:protect_city_core a destiny:MotiveSpecific ;
     rdfs:label "Защитить ядро города"@ru, 
         "Protect city core"@en ;
     rdfs:comment "Защитить ядро общества и дом человечества от внутренних угроз."@ru, 
         "Protect the core of society and humanity's home from internal threats."@en ;
-    prov:specializationOf destiny:protection_motive .
-
-# Дуэль на хребте Двиндлера
-# Showdown at Dwindler's Ridge
+    destiny:specializationOf destiny:protection_motive .
 
 destiny:showdown_at_dwindlers_ridge a destiny:GameEvent ;
     rdfs:label "Дуэль на хребте Двиндлера"@ru, 
         "Showdown at Dwindler's Ridge"@en ;
     rdfs:comment "Легендарная дуэль между Шин Малфуром и Дредженом Йором на хребте Двиндлера. Шин выстрелил первым и получил Последнее слово."@ru, 
         "Legendary duel between Shin Malphur and Dredgen Yor at Dwindler's Ridge. Shin shot first and got the Last word."@en ;
-    prov:wasAssociatedWith destiny:shin_malphur , destiny:dredgen_yor ;
-    prov:atLocation destiny:dwindlers_ridge .
+    crm:P11_had_participant destiny:shin_malphur , destiny:dredgen_yor ;
+    crm:P9_consists_of [
+        a crm:E69_Death ;
+        crm:P100_was_death_of destiny:dredgen_yor
+    ] ;
+    crm:P7_took_place_at destiny:dwindlers_ridge .
 
 destiny:shin_malphur a destiny:Character ;
     rdfs:label "Шин Малфур"@ru, 
         "Shin Malphur"@en ;
     rdfs:comment "Легендарный Страж-Охотник, победивший Дреджена Йора в дуэли на хребте Двиндлера."@ru, 
         "Legendary Guardian Hunter who defeated Dredgen Yor in the showdown at Dwindler's Ridge."@en ;
-    prov:actedOnBehalfOf destiny:guardians .
+    crm:P107i_is_current_or_former_member_of destiny:guardians .
 
 destiny:dredgen_yor a destiny:Character ;
     rdfs:label "Дреджен Йор"@ru, 
         "Dredgen Yor"@en ;
     rdfs:comment "Темный Страж, владевший черным оружием Терн, противник Шин Малфура."@ru, 
         "Dark Guardian who wielded the black weapon Thorn, opponent of Shin Malphur."@en ;
-    prov:actedOnBehalfOf destiny:guardians ;
-    prov:wasInvalidatedBy destiny:showdown_at_dwindlers_ridge .
+    crm:P107i_is_current_or_former_member_of destiny:guardians .
 
 destiny:dwindlers_ridge a destiny:Location ;
     rdfs:label "Хребет Двиндлера"@ru, 
         "Dwindler's Ridge"@en ;
     rdfs:comment "Место легендарной дуэли между Шин Малфуром и Дредженом Йором."@ru, 
         "Site of the legendary showdown between Shin Malphur and Dredgen Yor."@en ;
-    prov:atLocation destiny:solar_system .
+    crm:P7_took_place_at destiny:solar_system .
 
 destiny:sunbreakers_order a destiny:Organization ;
     rdfs:label "Орден Солнцеломов"@ru, 
         "Sunbreakers Order"@en ;
     rdfs:comment "Старый орден Титанов, суперсерьезные наемники с огненными молотами, десятилетиями находившиеся в диких землях."@ru, 
         "Old Titan order, super serious mercenaries with fire hammers, been in the wilds for decades."@en ;
-    prov:actedOnBehalfOf destiny:guardians .
+    crm:P107i_is_current_or_former_member_of destiny:guardians .
 
 destiny:sunbreakers_city_pact a destiny:GameEvent ;
     rdfs:label "Новый договор Солнцеломов с Городом"@ru, 
         "Sunbreakers new pact with the City"@en ;
     rdfs:comment "Солнцеломы заключили новый договор с Последним городом, что привело к увеличению их числа."@ru, 
         "The Sunbreakers made a new pact with the Last City, leading to an increase in their numbers."@en ;
-    prov:wasAssociatedWith destiny:sunbreakers_order , destiny:guardians ;
-    prov:atLocation destiny:last_city ;
-    prov:qualifiedAssociation [
-        a prov:Association ;
-        prov:agent destiny:sunbreakers_order ;
-        prov:hadPlan destiny:return_to_city_service
+    crm:P11_had_participant destiny:sunbreakers_order , destiny:guardians ;
+    crm:P7_took_place_at destiny:last_city ;
+    destiny:clarifiedMotive [
+        a destiny:ClarifiedMotive ;
+        destiny:character destiny:sunbreakers_order ;
+        destiny:hasMotive destiny:return_to_city_service
     ] .
 
-destiny:return_to_city_service a prov:Plan ;
+destiny:return_to_city_service a destiny:MotiveSpecific ;
     rdfs:label "Вернуться на службу Городу"@ru, 
         "Return to City service"@en ;
     rdfs:comment "Вернуться на службу Последнему городу после заключения нового договора."@ru, 
         "Return to service of the Last City after making a new pact."@en ;
-    prov:specializationOf destiny:protection_motive .
+    destiny:specializationOf destiny:protection_motive .
 
 destiny:ayane_takanome a destiny:Character ;
     rdfs:label "Аяна Таканоме"@ru, 
         "Ayane Takanome"@en ;
     rdfs:comment "Первая защитница Последнего города, основательница Рейнджеров Таканоме. Не является носителем Света."@ru, 
         "First protector of the Last City, founder of the Takanome Rangers. Not a bearer of the Light."@en ;
-    prov:actedOnBehalfOf destiny:takanome_rangers .
+    crm:P107i_is_current_or_former_member_of destiny:takanome_rangers .
 
 destiny:takanome_rangers a destiny:Organization ;
     rdfs:label "Рейнджеры Таканоме"@ru, 
@@ -1465,54 +1488,54 @@ destiny:takanome_rangers_guard_refugee_roads a destiny:GameEvent ;
         "Takanome Rangers guarded refugee roads"@en ;
     rdfs:comment "Рейнджеры Таканоме с высот гор охраняли дороги беженцев к Последнему городу, уничтожая Падших, бандитов и убийц."@ru, 
         "Takanome Rangers from mountain perches guarded refugee roads to the Last City, bringing down Fallen, bandits and murderers."@en ;
-    prov:wasAssociatedWith destiny:takanome_rangers ;
-    prov:atLocation destiny:earth ;
-    prov:qualifiedAssociation [
-        a prov:Association ;
-        prov:agent destiny:takanome_rangers ;
-        prov:hadPlan destiny:protect_refugee_roads
+    crm:P11_had_participant destiny:takanome_rangers ;
+    crm:P7_took_place_at destiny:earth ;
+    destiny:clarifiedMotive [
+        a destiny:ClarifiedMotive ;
+        destiny:character destiny:takanome_rangers ;
+        destiny:hasMotive destiny:protect_refugee_roads
     ] .
 
-destiny:protect_refugee_roads a prov:Plan ;
+destiny:protect_refugee_roads a destiny:MotiveSpecific ;
     rdfs:label "Защитить дороги беженцев"@ru, 
         "Protect refugee roads"@en ;
     rdfs:comment "Защитить дороги беженцев к Последнему городу от Падших, бандитов и убийц."@ru, 
         "Protect refugee roads to the Last City from Fallen, bandits and murderers."@en ;
-    prov:specializationOf destiny:protection_motive .
+    destiny:specializationOf destiny:protection_motive .
 
 destiny:chioma_esi a destiny:Character ;
     rdfs:label "Чиома Эси"@ru,
         "Chioma Esi"@en ;
     rdfs:comment "Ученый Иштар Коллектив, партнер Майи Сундареш."@ru,
         "Ishtar Collective scientist, partner of Maya Sundaresh."@en ;
-    prov:actedOnBehalfOf destiny:ishtar_collective .
+    crm:P107i_is_current_or_former_member_of destiny:ishtar_collective .
 
 destiny:maya_sundaresh a destiny:Character ;
     rdfs:label "Майя Сундареш"@ru,
         "Maya Sundaresh"@en ;
     rdfs:comment "Ученый Иштар Коллектив, партнер Чиомы Эси."@ru,
         "Ishtar Collective scientist, partner of Chioma Esi."@en ;
-    prov:actedOnBehalfOf destiny:ishtar_collective .
+    crm:P107i_is_current_or_former_member_of destiny:ishtar_collective .
 
 destiny:ishtar_collective_venus_research a destiny:GameEvent ;
     rdfs:label "Исследования Коллектива Иштар на Венере"@ru,
         "Ishtar Collective research on Venus"@en ;
     rdfs:comment "Изучение Коллективом Иштар загадочных руин на Венере, найденных после терраформирования планеты Странником."@ru,
         "Ishtar Collective research on enigmatic ruins on Venus, unearthed by the Traveler's terraforming."@en ;
-    prov:wasAssociatedWith destiny:chioma_esi , destiny:maya_sundaresh , destiny:ishtar_collective ;
-    prov:atLocation destiny:venus ;
-    prov:qualifiedAssociation [
-        a prov:Association ;
-        prov:agent destiny:ishtar_collective ;
-        prov:hadPlan destiny:explore_venus_ruins
+    crm:P11_had_participant destiny:chioma_esi , destiny:maya_sundaresh , destiny:ishtar_collective ;
+    crm:P7_took_place_at destiny:venus ;
+    destiny:clarifiedMotive [
+        a destiny:ClarifiedMotive ;
+        destiny:character destiny:ishtar_collective ;
+        destiny:hasMotive destiny:explore_venus_ruins
     ] .
 
-destiny:explore_venus_ruins a prov:Plan ;
+destiny:explore_venus_ruins a destiny:MotiveSpecific ;
     rdfs:label "Исследовать руины на Венере"@ru, 
         "Explore Venus ruins"@en ;
     rdfs:comment "Исследовать руины на Венере для поиска ответов."@ru, 
         "Explore Venus ruins to find answers."@en ;
-    prov:specializationOf destiny:knowledge_motive .
+    destiny:specializationOf destiny:knowledge_motive .
 
 destiny:ahamkara a destiny:Organization ;
     rdfs:label "Ахамкара"@ru,
@@ -1525,27 +1548,27 @@ destiny:ahamkara_extinction a destiny:GameEvent ;
         "Ahamkaras' extinction"@en ;
     rdfs:comment "Ахамкары доставляли столько проблем, что были полностью истреблены."@ru,
         "Ahamkaras troubled us enough to be completely hunted to extinction."@en ;
-    prov:wasAssociatedWith destiny:guardians , destiny:ahamkara ;
-    prov:atLocation destiny:solar_system ;
-    prov:qualifiedAssociation [
-        a prov:Association ;
-        prov:agent destiny:guardians ;
-        prov:hadPlan destiny:eliminate_ahamkara_threat
+    crm:P11_had_participant destiny:guardians , destiny:ahamkara ;
+    crm:P7_took_place_at destiny:solar_system ;
+    destiny:clarifiedMotive [
+        a destiny:ClarifiedMotive ;
+        destiny:character destiny:guardians ;
+        destiny:hasMotive destiny:eliminate_ahamkara_threat
     ] .
 
-destiny:eliminate_ahamkara_threat a prov:Plan ;
+destiny:eliminate_ahamkara_threat a destiny:MotiveSpecific ;
     rdfs:label "Устранить угрозу Ахамкар"@ru,
         "Eliminate Ahamkara threat"@en ;
     rdfs:comment "Истребить Ахамкар из-за проблем, которые они доставляли."@ru,
         "Hunt Ahamkaras to extinction due to the trouble they caused."@en ;
-    prov:specializationOf destiny:protection_motive .
+    destiny:specializationOf destiny:protection_motive .
 
 destiny:calus a destiny:Character ;
     rdfs:label "Калус"@ru,
         "Calus"@en ;
     rdfs:comment "Император Кабал, владелец Левиафана."@ru,
         "Cabal Emperor, owner of the Leviathan."@en ;
-    prov:actedOnBehalfOf destiny:cabal .
+    crm:P107i_is_current_or_former_member_of destiny:cabal .
 
 destiny:leviathan a destiny:Object ;
     rdfs:label "Левиафан"@ru,
@@ -1558,13 +1581,13 @@ destiny:guardians_calus_trials a destiny:GameEvent ;
         "Guardians undergo Calus trials on Leviathan"@en ;
     rdfs:comment "Стражи проходят испытания Калуса на борту Левиафана."@ru,
         "Guardians undergo Calus trials aboard the Leviathan."@en ;
-    prov:wasAssociatedWith destiny:guardians , destiny:calus ;
-    prov:atLocation destiny:leviathan , destiny:solar_system ;
-    prov:wasInformedBy destiny:traveler_awakened_destroyed_ghaul_and_attracted_pyramids ;
-    prov:qualifiedAssociation [
-        a prov:Association ;
-        prov:agent destiny:guardians , destiny:calus ;
-        prov:hadPlan destiny:competition_motive
+    crm:P11_had_participant destiny:guardians , destiny:calus ;
+    crm:P7_took_place_at destiny:leviathan , destiny:solar_system ;
+    crm:P183i_starts_after_the_end_of destiny:traveler_awakened_destroyed_ghaul_and_attracted_pyramids ;
+    destiny:clarifiedMotive [
+        a destiny:ClarifiedMotive ;
+        destiny:character destiny:guardians , destiny:calus ;
+        destiny:hasMotive destiny:competition_motive
     ] .
 
 destiny:factions_return_to_last_city a destiny:GameEvent ;
@@ -1572,13 +1595,13 @@ destiny:factions_return_to_last_city a destiny:GameEvent ;
         "Factions return to Last City"@en ;
     rdfs:comment "Фракции вернулись в Последний город после поражения Гоула и начали набирать новых членов."@ru,
         "Factions returned to the Last City after Ghaul's defeat and began recruiting new members."@en ;
-    prov:wasAssociatedWith destiny:arach_jalaal, destiny:executor_hideo, destiny:lakshmi_2 ;
-    prov:atLocation destiny:last_city ;
-    prov:wasInformedBy destiny:traveler_awakened_destroyed_ghaul_and_attracted_pyramids ;
-    prov:qualifiedAssociation [
-        a prov:Association ;
-        prov:agent destiny:arach_jalaal, destiny:executor_hideo, destiny:lakshmi_2 ;
-        prov:hadPlan destiny:recruit_new_members
+    crm:P11_had_participant destiny:arach_jalaal, destiny:executor_hideo, destiny:lakshmi_2 ;
+    crm:P7_took_place_at destiny:last_city ;
+    crm:P183i_starts_after_the_end_of destiny:traveler_awakened_destroyed_ghaul_and_attracted_pyramids ;
+    destiny:clarifiedMotive [
+        a destiny:ClarifiedMotive ;
+        destiny:character destiny:arach_jalaal, destiny:executor_hideo, destiny:lakshmi_2 ;
+        destiny:hasMotive destiny:recruit_new_members
     ] .
 
 destiny:arach_jalaal a destiny:Character ;
@@ -1586,21 +1609,21 @@ destiny:arach_jalaal a destiny:Character ;
         "Arach Jalaal"@en ;
     rdfs:comment "Лидер фракции Мертвая Орбита."@ru,
         "Leader of Dead Orbit faction."@en ;
-    prov:actedOnBehalfOf destiny:dead_orbit .
+    crm:P107i_is_current_or_former_member_of destiny:dead_orbit .
 
 destiny:executor_hideo a destiny:Character ;
     rdfs:label "Исполнитель Хидео"@ru,
         "Executor Hideo"@en ;
     rdfs:comment "Лидер фракции Новая Монархия."@ru,
         "Leader of New Monarchy faction."@en ;
-    prov:actedOnBehalfOf destiny:new_monarchy .
+    crm:P107i_is_current_or_former_member_of destiny:new_monarchy .
 
 destiny:lakshmi_2 a destiny:Character ;
     rdfs:label "Лакшми-2"@ru,
         "Lakshmi-2"@en ;
     rdfs:comment "Лидер фракции Культ Будущей Войны."@ru,
         "Leader of Future War Cult faction."@en ;
-    prov:actedOnBehalfOf destiny:future_war_cult .
+    crm:P107i_is_current_or_former_member_of destiny:future_war_cult .
 
 destiny:dead_orbit a destiny:Organization ;
     rdfs:label "Мертвая Орбита"@ru,
@@ -1620,24 +1643,24 @@ destiny:future_war_cult a destiny:Organization ;
     rdfs:comment "Фракция, которая предсказывает и готовится к войне постоянно."@ru,
         "Faction that predicts and prepares for war constantly."@en .
 
-destiny:recruit_new_members a prov:Plan ;
+destiny:recruit_new_members a destiny:MotiveSpecific ;
     rdfs:label "Привлечь новых членов"@ru,
         "Recruit new members"@en ;
     rdfs:comment "Провести испытания для привлечения новых членов в фракции."@ru,
         "Hold trials to attract new members to factions."@en ;
-    prov:specializationOf destiny:power_motive .
+    destiny:specializationOf destiny:power_motive .
 
 destiny:calus_revolution a destiny:GameEvent ;
     rdfs:label "Революция Калуса"@ru,
         "Calus's revolution"@en ;
     rdfs:comment "Калус провел революцию против сената Кабал, объявив себя отцом империи и всех творений. Имперская гвардия вошла в храм, где заседал сенат, и Калус провозгласил себя совершенным любящим богом."@ru,
         "Calus conducted a revolution against the Cabal senate, declaring himself father of the empire and all creation. The imperial guard marched into the temple where the senate convened, and Calus proclaimed himself the perfect loving god."@en ;
-    prov:wasAssociatedWith destiny:calus ;
-    prov:atLocation destiny:cabal_homeworld ;
-    prov:qualifiedAssociation [
-        a prov:Association ;
-        prov:agent destiny:calus ;
-        prov:hadPlan destiny:establish_imperial_rule
+    crm:P11_had_participant destiny:calus ;
+    crm:P7_took_place_at destiny:cabal_homeworld ;
+    destiny:clarifiedMotive [
+        a destiny:ClarifiedMotive ;
+        destiny:character destiny:calus ;
+        destiny:hasMotive destiny:establish_imperial_rule
     ] .
 
 destiny:ghaul_appointed_red_legion_primus a destiny:GameEvent ;
@@ -1645,13 +1668,13 @@ destiny:ghaul_appointed_red_legion_primus a destiny:GameEvent ;
         "Ghaul appointed Primus of Red Legion"@en ;
     rdfs:comment "Калус назначил Гоула примасом Красного Легиона после того, как тот проявил себя как выдающийся гладиатор в колизее."@ru,
         "Calus appointed Ghaul as Primus of the Red Legion after he proved himself as an outstanding gladiator in the coliseum."@en ;
-    prov:wasAssociatedWith destiny:calus, destiny:ghaul ;
-    prov:wasInformedBy destiny:calus_revolution ;
-    prov:atLocation destiny:cabal_homeworld ;
-    prov:qualifiedAssociation [
-        a prov:Association ;
-        prov:agent destiny:calus ;
-        prov:hadPlan destiny:recruit_elite_commander
+    crm:P11_had_participant destiny:calus, destiny:ghaul ;
+    crm:P183i_starts_after_the_end_of destiny:calus_revolution ;
+    crm:P7_took_place_at destiny:cabal_homeworld ;
+    destiny:clarifiedMotive [
+        a destiny:ClarifiedMotive ;
+        destiny:character destiny:calus ;
+        destiny:hasMotive destiny:recruit_elite_commander
     ] .
 
 destiny:consul_banishment a destiny:GameEvent ;
@@ -1659,17 +1682,17 @@ destiny:consul_banishment a destiny:GameEvent ;
         "Consul's banishment"@en ;
     rdfs:comment "Первым актом Калуса как императора было изгнание Консула в пустоши. Консул был лишен титула, ранга и одежды, и ему было приказано бежать."@ru,
         "Calus's first act as emperor was to banish the Consul to the wasteland. The Consul was stripped of title, rank, and clothing, and ordered to run."@en ;
-    prov:wasAssociatedWith destiny:calus, destiny:consul ;
-    prov:wasInformedBy destiny:calus_revolution ;
-    prov:atLocation destiny:cabal_homeworld ;
-    prov:qualifiedAssociation [
-        a prov:Association ;
-        prov:agent destiny:calus ;
-        prov:hadPlan destiny:eliminate_political_opponent
+    crm:P11_had_participant destiny:calus, destiny:consul ;
+    crm:P183i_starts_after_the_end_of destiny:calus_revolution ;
+    crm:P7_took_place_at destiny:cabal_homeworld ;
+    destiny:clarifiedMotive [
+        a destiny:ClarifiedMotive ;
+        destiny:character destiny:calus ;
+        destiny:hasMotive destiny:eliminate_political_opponent
     ] , [
-        a prov:Association ;
-        prov:agent destiny:consul ;
-        prov:hadPlan destiny:survival_motive
+        a destiny:ClarifiedMotive ;
+        destiny:character destiny:consul ;
+        destiny:hasMotive destiny:survival_motive
     ] .
 
 destiny:midnight_coup a destiny:GameEvent ;
@@ -1677,17 +1700,17 @@ destiny:midnight_coup a destiny:GameEvent ;
         "Midnight Coup"@en ;
     rdfs:comment "Гоул и Консул возглавили мятеж против Калуса, проникнув в его двор поздно ночью. Заговорщики боялись убить Калуса из-за любви народа к своему богу-императору, поэтому приговорили его к изгнанию. Калус был запечатан в Левиафане и отправлен в дальние пределы космоса."@ru,
         "Ghaul and the Consul led a coup against Calus, infiltrating his court late at night. The conspirators were afraid to kill Calus due to the people's love for their god-emperor, so they sentenced him to exile. Calus was sealed inside the Leviathan and ejected into the furthest reaches of space."@en ;
-    prov:wasAssociatedWith destiny:ghaul, destiny:consul, destiny:calus, destiny:red_legion ;
-    prov:wasInformedBy destiny:ghaul_appointed_red_legion_primus, destiny:consul_banishment ;
-    prov:atLocation destiny:cabal_homeworld ;
-    prov:qualifiedAssociation [
-        a prov:Association ;
-        prov:agent destiny:ghaul ;
-        prov:hadPlan destiny:help_consul
+    crm:P11_had_participant destiny:ghaul, destiny:consul, destiny:calus, destiny:red_legion ;
+    crm:P183i_starts_after_the_end_of destiny:ghaul_appointed_red_legion_primus, destiny:consul_banishment ;
+    crm:P7_took_place_at destiny:cabal_homeworld ;
+    destiny:clarifiedMotive [
+        a destiny:ClarifiedMotive ;
+        destiny:character destiny:ghaul ;
+        destiny:hasMotive destiny:help_consul
     ] , [
-        a prov:Association ;
-        prov:agent destiny:consul ;
-        prov:hadPlan destiny:revenge_against_calus
+        a destiny:ClarifiedMotive ;
+        destiny:character destiny:consul ;
+        destiny:hasMotive destiny:revenge_against_calus
     ] .
 
 destiny:calus_conquest_of_sindu a destiny:GameEvent ;
@@ -1695,11 +1718,11 @@ destiny:calus_conquest_of_sindu a destiny:GameEvent ;
         "Calus conquest of Sindu civilization"@en ;
     rdfs:comment "Калус покорил цивилизацию Синду, населявшую газовые гиганты в спинвардских маршах."@ru,
         "Calus conquered the Sindu civilization that inhabited gas giants in the spinward marches."@en ;
-    prov:wasAssociatedWith destiny:calus, destiny:sindu ;
-    prov:qualifiedAssociation [
-        a prov:Association ;
-        prov:agent destiny:calus ;
-        prov:hadPlan destiny:conquest_motive
+    crm:P11_had_participant destiny:calus, destiny:sindu ;
+    destiny:clarifiedMotive [
+        a destiny:ClarifiedMotive ;
+        destiny:character destiny:calus ;
+        destiny:hasMotive destiny:conquest_motive
     ] .
 
 destiny:jarus_recruitment_by_calus a destiny:GameEvent ;
@@ -1707,72 +1730,77 @@ destiny:jarus_recruitment_by_calus a destiny:GameEvent ;
         "Jarus recruitment by Calus"@en ;
     rdfs:comment "Калус завербовал Джаруса, последнего пилота звезд Синду, и сделал его своим Асом."@ru,
         "Calus recruited Jarus, the last star-pilot of the Sindu, and made him his Ace-Defiant."@en ;
-    prov:wasAssociatedWith destiny:calus, destiny:jarus ;
-    prov:atLocation destiny:leviathan ;
-    prov:wasInformedBy destiny:calus_conquest_of_sindu ;
-    prov:qualifiedAssociation destiny:calus_recruit_shadow ,
+    crm:P11_had_participant destiny:calus, destiny:jarus ;
+    crm:P7_took_place_at destiny:leviathan ;
+    crm:P183i_starts_after_the_end_of destiny:calus_conquest_of_sindu ;
+    crm:P108_has_produced destiny:jarus_obey_calus_orders ;
+    destiny:clarifiedMotive destiny:calus_recruit_shadow ,
     [
-        a prov:Association ;
-        prov:agent destiny:jarus ;
-        prov:hadPlan destiny:survival_motive
+        a destiny:ClarifiedMotive ;
+        destiny:character destiny:jarus ;
+        destiny:hasMotive destiny:survival_motive
     ] .
 
-destiny:calus_recruit_shadow a prov:Association ;
+destiny:calus_recruit_shadow a destiny:ClarifiedMotive ;
     rdfs:label "Уточнение: мотив Калуса завербовать Тень"@ru,
         "Clarification: Calus's motivation to recruit a Shadow"@en ;
     rdfs:comment "Уточнение, отражающее, что Калус хочет завербовать Тень."@ru,
         "Clarification reflecting that Calus wants to recruit a Shadow."@en ;
-    prov:agent destiny:calus ;
-    prov:hadPlan destiny:recruit_shadow .
+    destiny:character destiny:calus ;
+    destiny:hasMotive destiny:recruit_shadow .
 
 destiny:jarus_elimination_of_shayotet a destiny:GameEvent ;
     rdfs:label "Устранение Джарусом Шаётета"@ru,
         "Jarus elimination of Shayotet"@en ;
     rdfs:comment "Джарус устранил Шаётета по заданию Калуса."@ru,
         "Jarus eliminated Shayotet at Calus's request."@en ;
-    prov:wasAssociatedWith destiny:jarus, destiny:shayotet ;
-    prov:wasInformedBy destiny:jarus_recruitment_by_calus ;
-    prov:qualifiedAssociation destiny:jarus_obey_calus_orders .
+    crm:P11_had_participant destiny:jarus, destiny:shayotet ;
+    crm:P183i_starts_after_the_end_of destiny:jarus_recruitment_by_calus ;
+    crm:P9_consists_of [
+        a crm:E69_Death ;
+        crm:P100_was_death_of destiny:shayotet
+    ] ;
+    destiny:clarifiedMotive destiny:jarus_obey_calus_orders .
 
-destiny:jarus_obey_calus_orders a prov:Association ;
+destiny:jarus_obey_calus_orders a destiny:ClarifiedMotive ;
     rdfs:label "Уточнение: Джарус подчиняется приказам Калуса"@ru,
         "Clarification: Jarus obeys Calus's orders"@en ;
     rdfs:comment "Уточнение, отражающее, что Джарус подчиняется приказам Калуса."@ru,
         "Clarification reflecting that Jarus obeys Calus's orders."@en ;
-    prov:agent destiny:jarus ;
-    prov:hadPlan destiny:obey_calus_orders ;
-    prov:wasGeneratedBy destiny:jarus_recruitment_by_calus .
+    destiny:character destiny:jarus ;
+    destiny:hasMotive destiny:obey_calus_orders .
 
 destiny:shadows_attack_on_ghaul_dominus a destiny:GameEvent ;
     rdfs:label "Атака Теней на корабль Доминуса Гоула"@ru,
         "Shadows attack on Ghaul's Dominus ship"@en ;
     rdfs:comment "Джарус атаковал корабль Доминус Гоула, доставив Теней ценой собственной жизни."@ru,
         "Jarus attacked Ghaul's Dominus ship, delivering the Shadows at the cost of his own life."@en ;
-    prov:wasAssociatedWith destiny:jarus, destiny:shadows , destiny:fulminator ;
-    prov:wasInformedBy destiny:jarus_elimination_of_shayotet , destiny:fulminator_assassination_of_thauul ;
-    prov:qualifiedAssociation destiny:jarus_obey_calus_orders , destiny:fulminator_obey_calus_orders .
+    crm:P11_had_participant destiny:jarus, destiny:shadows , destiny:fulminator ;
+    crm:P183i_starts_after_the_end_of destiny:jarus_elimination_of_shayotet , destiny:fulminator_assassination_of_thauul ;
+    crm:P9_consists_of [
+        a crm:E69_Death ;
+        crm:P100_was_death_of destiny:jarus
+    ] ;
+    destiny:clarifiedMotive destiny:jarus_obey_calus_orders , destiny:fulminator_obey_calus_orders .
 
-destiny:fulminator_obey_calus_orders a prov:Association ;
+destiny:fulminator_obey_calus_orders a destiny:ClarifiedMotive ;
     rdfs:label "Уточнение: Грозящая подчиняется приказам Калуса"@ru,
         "Clarification: Fulminator obeys Calus's orders"@en ;
     rdfs:comment "Уточнение, отражающее, что Грозящая подчиняется приказам Калуса."@ru,
         "Clarification reflecting that Fulminator obeys Calus's orders."@en ;
-    prov:agent destiny:fulminator ;
-    prov:hadPlan destiny:obey_calus_orders ;
-    prov:wasGeneratedBy destiny:fulminator_recruitment_by_calus .
+    destiny:character destiny:fulminator ;
+    destiny:hasMotive destiny:obey_calus_orders .
 
 destiny:jarus a destiny:Character ;
     rdfs:label "Джарус"@ru,
         "Jarus"@en ;
     rdfs:comment "Последний пилот звезд Синду, ставший Асом Калуса."@ru,
         "Last star-pilot of the Sindu, became Calus's Ace-Defiant."@en ;
-    prov:wasInvalidatedBy destiny:shadows_attack_on_ghaul_dominus ;
-    prov:actedOnBehalfOf destiny:sindu , destiny:shadows .
+    crm:P107i_is_current_or_former_member_of destiny:sindu , destiny:shadows .
 
 destiny:shayotet a destiny:Character ;
     rdfs:label "Шаётет"@ru,
-        "Shayotet"@en ;
-    prov:wasInvalidatedBy destiny:jarus_elimination_of_shayotet .
+        "Shayotet"@en .
 
 destiny:sindu a destiny:Organization ;
     rdfs:label "Синду"@ru,
@@ -1784,68 +1812,67 @@ destiny:shadows a destiny:Organization ;
     rdfs:label "Тени"@ru,
         "Shadows"@en ;
     rdfs:comment "Элитные воины Калуса."@ru,
-        "Elite warriors of Calus."@en ;
-    prov:actedOnBehalfOf destiny:calus .
+        "Elite warriors of Calus."@en .
 
-destiny:obey_calus_orders a prov:Plan ;
+destiny:obey_calus_orders a destiny:MotiveSpecific ;
     rdfs:label "Подчиняться приказам Калуса"@ru,
         "Obey Calus orders"@en ;
     rdfs:comment "Выполнять приказы и задания Калуса."@ru,
         "Execute Calus's orders and assignments."@en ;
-    prov:specializationOf destiny:submission_motive .
+    destiny:specializationOf destiny:submission_motive .
 
-destiny:establish_imperial_rule a prov:Plan ;
+destiny:establish_imperial_rule a destiny:MotiveSpecific ;
     rdfs:label "Установить имперское правление"@ru,
         "Establish imperial rule"@en ;
     rdfs:comment "Установить абсолютную власть императора над империей Кабал, устранив сенат."@ru,
         "Establish absolute imperial authority over the Cabal empire, eliminating the senate."@en ;
-    prov:specializationOf destiny:power_motive .
+    destiny:specializationOf destiny:power_motive .
 
-destiny:recruit_elite_commander a prov:Plan ;
+destiny:recruit_elite_commander a destiny:MotiveSpecific ;
     rdfs:label "Завербовать элитного командира"@ru,
         "Recruit elite commander"@en ;
     rdfs:comment "Найти и назначить выдающегося воина на должность командира элитного подразделения."@ru,
         "Find and appoint an outstanding warrior to command an elite unit."@en ;
-    prov:specializationOf destiny:power_motive .
+    destiny:specializationOf destiny:power_motive .
 
-destiny:eliminate_political_opponent a prov:Plan ;
+destiny:eliminate_political_opponent a destiny:MotiveSpecific ;
     rdfs:label "Устранить политического противника"@ru,
         "Eliminate political opponent"@en ;
     rdfs:comment "Устранить политического противника для укрепления собственной власти."@ru,
         "Eliminate a political opponent to strengthen one's own power."@en ;
-    prov:specializationOf destiny:elimination_motive .
+    destiny:specializationOf destiny:elimination_motive .
 
-destiny:help_consul a prov:Plan ;
+destiny:help_consul a destiny:MotiveSpecific ;
     rdfs:label "Помочь Консулу"@ru,
         "Help the Consul"@en ;
     rdfs:comment "Помочь Консулу в его мести против Калуса и поддержать его в мятеже."@ru,
         "Help the Consul in his revenge against Calus and support him in the coup."@en ;
-    prov:specializationOf destiny:protection_motive .
+    destiny:specializationOf destiny:protection_motive .
 
-destiny:revenge_against_calus a prov:Plan ;
+destiny:revenge_against_calus a destiny:MotiveSpecific ;
     rdfs:label "Отомстить Калусу"@ru,
         "Revenge against Calus"@en ;
     rdfs:comment "Отомстить Калусу за изгнание и унижение."@ru,
         "Take revenge against Calus for banishment and humiliation."@en ;
-    prov:specializationOf destiny:revenge_motive .
+    destiny:specializationOf destiny:revenge_motive .
 
-destiny:recruit_shadow a prov:Plan ;
+destiny:recruit_shadow a destiny:MotiveSpecific ;
     rdfs:label "Набрать Тень"@ru,
         "Recruit Shadow"@en ;
     rdfs:comment "Набрать элитного воина для службы Калусу."@ru,
         "Recruit elite warrior to serve Calus."@en ;
-    prov:specializationOf destiny:power_motive .
+    destiny:specializationOf destiny:power_motive .
 
 destiny:clipse_cataclysm a destiny:GameEvent ;
     rdfs:label "Катастрофа Клипсов"@ru,
         "Clipse cataclysm"@en ;
     rdfs:comment "Межзвездное гамма-излучение уничтожило западное полушарие Клипсов и отравило атмосферу, начав вечную войну с инопланетной угрозой."@ru,
         "Interstellar gamma radiation destroyed the Clipse western hemisphere and poisoned the atmosphere, starting perpetual war with alien threat."@en ;
-    prov:wasAssociatedWith destiny:clipse ;
-    prov:qualifiedAssociation [
-        a prov:Association ;
-        prov:agent destiny:clipse ;
-        prov:hadPlan destiny:survival_motive
+    crm:P11_had_participant destiny:clipse ;
+    destiny:clarifiedMotive [
+        a destiny:ClarifiedMotive ;
+        destiny:character destiny:clipse ;
+        destiny:hasMotive destiny:survival_motive
     ] .
 
 destiny:calus_conquest_of_clipse a destiny:GameEvent ;
@@ -1853,60 +1880,61 @@ destiny:calus_conquest_of_clipse a destiny:GameEvent ;
         "Calus conquest of Clipse"@en ;
     rdfs:comment "Калус покорил Клипсов, предложив им все необходимое для окончания вечной войны."@ru,
         "Calus conquered the Clipse, offering them everything needed to end their perpetual war."@en ;
-    prov:wasAssociatedWith destiny:calus, destiny:clipse ;
-    prov:wasInformedBy destiny:clipse_cataclysm ;
-    prov:qualifiedAssociation destiny:calus_conquest_motive .
+    crm:P11_had_participant destiny:calus, destiny:clipse ;
+    crm:P183i_starts_after_the_end_of destiny:clipse_cataclysm ;
+    destiny:clarifiedMotive destiny:calus_conquest_motive .
 
 destiny:rull_recruitment_by_calus a destiny:GameEvent ;
     rdfs:label "Вербовка Рулла Калусом"@ru,
         "Rull recruitment by Calus"@en ;
     rdfs:comment "Калус завербовал Рулла, последнего выжившего воина Клипсов."@ru,
         "Calus recruited Rull, the last surviving Clipse warrior."@en ;
-    prov:wasAssociatedWith destiny:calus, destiny:rull ;
-    prov:wasInformedBy destiny:calus_conquest_of_clipse ;
-    prov:atLocation destiny:leviathan ;
-    prov:qualifiedAssociation destiny:calus_recruit_shadow .
+    crm:P11_had_participant destiny:calus, destiny:rull ;
+    crm:P183i_starts_after_the_end_of destiny:calus_conquest_of_clipse ;
+    crm:P7_took_place_at destiny:leviathan ;
+    crm:P108_has_produced destiny:rull_obey_calus_orders ;
+    destiny:clarifiedMotive destiny:calus_recruit_shadow .
 
 destiny:rull_assassination_mission a destiny:GameEvent ;
     rdfs:label "Миссия Рулла по убийству на родном мире Кабал"@ru,
         "Rull assassination mission on Cabal homeworld"@en ;
     rdfs:comment "Рулл отправился на родной мир Кабал с подарками от Калуса, убил Искаала и Моли прямо перед Гоулом. В результате Рулл был убит."@ru,
         "Rull went to the Cabal homeworld with gifts from Calus, assassinated Iska'al and Moli right in front of Ghaul. As a result, Rull was killed."@en ;
-    prov:wasAssociatedWith destiny:rull, destiny:iskaal, destiny:moli, destiny:ghaul ;
-    prov:atLocation destiny:cabal_homeworld ;
-    prov:wasInformedBy destiny:rull_recruitment_by_calus , destiny:midnight_coup ;
-    prov:qualifiedAssociation destiny:rull_obey_calus_orders .
+    crm:P11_had_participant destiny:rull, destiny:iskaal, destiny:moli, destiny:ghaul ;
+    crm:P7_took_place_at destiny:cabal_homeworld ;
+    crm:P183i_starts_after_the_end_of destiny:rull_recruitment_by_calus , destiny:midnight_coup ;
+    crm:P9_consists_of [
+        a crm:E69_Death ;
+        crm:P100_was_death_of destiny:rull , destiny:iskaal , destiny:moli
+    ] ;
+    destiny:clarifiedMotive destiny:rull_obey_calus_orders .
 
-destiny:rull_obey_calus_orders a prov:Association ;
+destiny:rull_obey_calus_orders a destiny:ClarifiedMotive ;
     rdfs:label "Уточнение: мотив Рулла выполнять приказы Калуса"@ru,
         "Clarification: Rull's motivation to obey Calus's orders"@en ;
     rdfs:comment "Уточнение, отражающее, что Рулл хочет выполнять приказы Калуса."@ru,
         "Clarification reflecting that Rull wants to obey Calus's orders."@en ;
-    prov:agent destiny:rull ;
-    prov:hadPlan destiny:obey_calus_orders ;
-    prov:wasGeneratedBy destiny:rull_recruitment_by_calus .
+    destiny:character destiny:rull ;
+    destiny:hasMotive destiny:obey_calus_orders .
 
 destiny:rull a destiny:Character ;
     rdfs:label "Рулл"@ru,
         "Rull"@en ;
     rdfs:comment "Последний выживший воин Клипсов, ставший Тенью Калуса."@ru,
         "Last surviving Clipse warrior, became Calus's Shadow."@en ;
-    prov:actedOnBehalfOf destiny:clipse , destiny:shadows ;
-    prov:wasInvalidatedBy destiny:rull_assassination_mission .
+    crm:P107i_is_current_or_former_member_of destiny:clipse , destiny:shadows .
 
 destiny:iskaal a destiny:Character ;
     rdfs:label "Искаал"@ru,
         "Iska'al"@en ;
     rdfs:comment "Бывший друг и доверенное лицо изгнанного императора Калуса."@ru,
-        "Former friend and confidante of the exiled Emperor Calus."@en ;
-    prov:wasInvalidatedBy destiny:rull_assassination_mission .
+        "Former friend and confidante of the exiled Emperor Calus."@en .
 
 destiny:moli a destiny:Character ;
     rdfs:label "Моли"@ru,
         "Moli"@en ;
     rdfs:comment "Бывший друг и доверенное лицо изгнанного императора Калуса."@ru,
-        "Former friend and confidante of the exiled Emperor Calus."@en ;
-    prov:wasInvalidatedBy destiny:rull_assassination_mission .
+        "Former friend and confidante of the exiled Emperor Calus."@en .
 
 destiny:clipse a destiny:Organization ;
     rdfs:label "Клипсы"@ru,
@@ -1925,43 +1953,50 @@ destiny:fulminator_recruitment_by_calus a destiny:GameEvent ;
         "Fulminator recruitment by Calus"@en ;
     rdfs:comment "Калус завербовал Грозящую, существо чистой энергии ковчегорожденных."@ru,
         "Calus recruited the Fulminator, a creature of pure Arkborn energy."@en ;
-    prov:wasAssociatedWith destiny:calus, destiny:fulminator ;
-    prov:atLocation destiny:leviathan ;
-    prov:qualifiedAssociation destiny:calus_recruit_shadow .
+    crm:P11_had_participant destiny:calus, destiny:fulminator ;
+    crm:P7_took_place_at destiny:leviathan ;
+    crm:P108_has_produced destiny:fulminator_obey_calus_orders ;
+    destiny:clarifiedMotive destiny:calus_recruit_shadow .
 
 destiny:fulminator_assassination_of_thauul a destiny:GameEvent ;
     rdfs:label "Убийство Грозящей Та'уула"@ru,
         "Fulminator assassination of Tha'uul"@en ;
     rdfs:comment "Грозящая убила Та'уула, мелкого дипломата, участвовавшего в перевороте против императора. В результате Грозящая узнала о планах Гоула напасть на Солнечную систему и Странника."@ru,
         "Fulminator assassinated Tha'uul, a minor diplomat who played a part in the coup against the emperor. As a result, Fulminator learned about Ghaul's plans to attack the Solar System and the Traveler."@en ;
-    prov:wasAssociatedWith destiny:fulminator, destiny:thauul ;
-    prov:wasInformedBy destiny:fulminator_recruitment_by_calus ;
-    prov:used destiny:ghaul_conquer_traveler_light ;
-    prov:qualifiedAssociation destiny:fulminator_obey_calus_orders .
+    crm:P11_had_participant destiny:fulminator, destiny:thauul ;
+    crm:P183i_starts_after_the_end_of destiny:fulminator_recruitment_by_calus ;
+    crm:P16_used_specific_object destiny:ghaul_conquer_traveler_light ;
+    crm:P9_consists_of [
+        a crm:E69_Death ;
+        crm:P100_was_death_of destiny:thauul
+    ] ;
+    destiny:clarifiedMotive destiny:fulminator_obey_calus_orders .
 
 destiny:fulminator_final_attack_on_ghaul a destiny:GameEvent ;
     rdfs:label "Финальная атака Грозящей на Гоула"@ru,
         "Fulminator final attack on Ghaul"@en ;
     rdfs:comment "Грозящая атаковала Гоула на мостике корабля Доминуса. В результате Грозящая была уничтожена."@ru,
         "Fulminator attacked Ghaul on the Dominus ship bridge. As a result, Fulminator was destroyed."@en ;
-    prov:wasAssociatedWith destiny:fulminator, destiny:ghaul ;
-    prov:wasInformedBy destiny:shadows_attack_on_ghaul_dominus ;
-    prov:qualifiedAssociation destiny:fulminator_obey_calus_orders .
+    crm:P11_had_participant destiny:fulminator, destiny:ghaul ;
+    crm:P183i_starts_after_the_end_of destiny:shadows_attack_on_ghaul_dominus ;
+    crm:P9_consists_of [
+        a crm:E69_Death ;
+        crm:P100_was_death_of destiny:fulminator
+    ] ;
+    destiny:clarifiedMotive destiny:fulminator_obey_calus_orders .
 
 destiny:fulminator a destiny:Character ;
     rdfs:label "Грозящая"@ru,
         "Fulminator"@en ;
     rdfs:comment "Существо чистой энергии ковчегорожденных, ставшее Тенью Калуса."@ru,
         "Creature of pure Arkborn energy, became Calus's Shadow."@en ;
-    prov:actedOnBehalfOf destiny:arkborn, destiny:shadows ;
-    prov:wasInvalidatedBy destiny:fulminator_final_attack_on_ghaul .
+    crm:P107i_is_current_or_former_member_of destiny:arkborn, destiny:shadows .
 
 destiny:thauul a destiny:Character ;
     rdfs:label "Та'уул"@ru,
         "Tha'uul"@en ;
     rdfs:comment "Мелкий дипломат, участвовавший в перевороте против императора Калуса."@ru,
-        "Minor diplomat who played a part in the coup against Emperor Calus."@en ;
-    prov:wasInvalidatedBy destiny:fulminator_assassination_of_thauul .
+        "Minor diplomat who played a part in the coup against Emperor Calus."@en .
 
 destiny:arkborn a destiny:Organization ;
     rdfs:label "Ковчегорожденные"@ru,
